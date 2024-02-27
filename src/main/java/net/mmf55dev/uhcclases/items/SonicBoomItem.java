@@ -4,6 +4,7 @@ import net.mmf55dev.uhcclases.EspectralClassUHC;
 import net.mmf55dev.uhcclases.classes.UhcClass;
 import net.mmf55dev.uhcclases.player.PlayerData;
 import net.mmf55dev.uhcclases.player.PlayerStats;
+import net.mmf55dev.uhcclases.utils.Time;
 import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Damageable;
@@ -46,12 +47,12 @@ public class SonicBoomItem implements Listener {
                                 p.playSound(p, Sound.ENTITY_WARDEN_SONIC_BOOM, 1.0f, 0.9f);
                             } else {
                                 long timeElapsed = System.currentTimeMillis() - cooldown.get(p.getUniqueId());
-                                if (timeElapsed >= 30000) {
+                                if (timeElapsed >= Time.seconds(30)) {
                                     this.cooldown.put(p.getUniqueId(), System.currentTimeMillis());
                                     particleBeam(p);
                                     p.playSound(p, Sound.ENTITY_WARDEN_SONIC_BOOM, 1.0f, 0.9f);
                                 } else {
-                                    p.sendMessage(ChatColor.RED + "Sonic Crystal esta en cooldown");
+                                    p.sendMessage(item.getItemMeta().getDisplayName() + ChatColor.RED + " sigue en cooldown!");
                                 }
                             }
                         } else {
