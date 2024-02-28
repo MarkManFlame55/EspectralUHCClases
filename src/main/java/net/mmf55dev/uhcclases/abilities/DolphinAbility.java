@@ -4,6 +4,7 @@ import net.mmf55dev.uhcclases.EspectralClassUHC;
 import net.mmf55dev.uhcclases.classes.UhcClass;
 import net.mmf55dev.uhcclases.player.PlayerData;
 import net.mmf55dev.uhcclases.player.PlayerStats;
+import net.mmf55dev.uhcclases.utils.DelayedTask;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -25,12 +26,16 @@ public class DolphinAbility implements Listener {
         ItemStack itemStack = e.getItem();
         World world = player.getWorld();
         PlayerStats playerStats = PlayerData.get(player.getUniqueId());
-        if (itemStack.getType().equals(Material.MILK_BUCKET) && playerStats.getUhcClass().equals(UhcClass.DOLPHIN)) {
-            player.addPotionEffect(new PotionEffect(PotionEffectType.DOLPHINS_GRACE, PotionEffect.INFINITE_DURATION, 0, false, false, false));
-            player.addPotionEffect(new PotionEffect(PotionEffectType.CONDUIT_POWER, PotionEffect.INFINITE_DURATION, 0 ,false, false, false));
-            if (world.getEnvironment().equals(World.Environment.NETHER)) {
-                player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 20, 1, false, false, false));
-                player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20, 1, false, false, false));
+        if (playerStats.getUhcClass() != null) {
+            if (itemStack.getType().equals(Material.MILK_BUCKET) && playerStats.getUhcClass().equals(UhcClass.DOLPHIN)) {
+                new DelayedTask(() -> {
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.DOLPHINS_GRACE, PotionEffect.INFINITE_DURATION, 0, false, false, false));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.CONDUIT_POWER, PotionEffect.INFINITE_DURATION, 0, false, false, false));
+                    if (world.getEnvironment().equals(World.Environment.NETHER)) {
+                        player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, PotionEffect.INFINITE_DURATION, 1, false, false, false));
+                        player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, PotionEffect.INFINITE_DURATION, 1, false, false, false));
+                    }
+                }, 1);
             }
         }
     }
@@ -39,11 +44,12 @@ public class DolphinAbility implements Listener {
         Player player = e.getPlayer();
         World world = e.getTo().getWorld();
         if (world != null && world.getEnvironment().equals(World.Environment.NETHER)) {
-            player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 20, 1, false, false, false));
-            player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20, 1, false, false, false));
+            player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, PotionEffect.INFINITE_DURATION, 1, false, false, false));
+            player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, PotionEffect.INFINITE_DURATION, 1, false, false, false));
         }
     }
     public static void init(Player player) {
-        player.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, PotionEffect.INFINITE_DURATION, 0, false, false, false));
+        player.addPotionEffect(new PotionEffect(PotionEffectType.DOLPHINS_GRACE, PotionEffect.INFINITE_DURATION, 0, false, false, false));
+        player.addPotionEffect(new PotionEffect(PotionEffectType.CONDUIT_POWER, PotionEffect.INFINITE_DURATION, 0, false, false, false));
     }
 }

@@ -1,7 +1,6 @@
 package net.mmf55dev.uhcclases.items;
 
 import net.mmf55dev.uhcclases.EspectralClassUHC;
-import net.mmf55dev.uhcclases.cache.DynamicCache;
 import net.mmf55dev.uhcclases.classes.UhcClass;
 import net.mmf55dev.uhcclases.player.PlayerData;
 import net.mmf55dev.uhcclases.player.PlayerStats;
@@ -33,7 +32,6 @@ import java.util.concurrent.TimeUnit;
 public class ArcherItem implements Listener {
 
     private final HashMap<UUID, Long> cooldown;
-    private final DynamicCache<UUID, ItemStack> cooldownCache = new DynamicCache<>(1, TimeUnit.MINUTES);
     public ArcherItem() {this.cooldown = new HashMap<>();}
 
     @EventHandler

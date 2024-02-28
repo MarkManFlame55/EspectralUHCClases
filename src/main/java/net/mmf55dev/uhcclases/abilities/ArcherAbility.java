@@ -5,6 +5,7 @@ import net.mmf55dev.uhcclases.classes.UhcClass;
 import net.mmf55dev.uhcclases.items.ArcherItem;
 import net.mmf55dev.uhcclases.player.PlayerData;
 import net.mmf55dev.uhcclases.player.PlayerStats;
+import net.mmf55dev.uhcclases.utils.DelayedTask;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -22,8 +23,12 @@ public class ArcherAbility implements Listener {
         Player player = e.getPlayer();
         ItemStack itemStack = e.getItem();
         PlayerStats playerStats = PlayerData.get(player.getUniqueId());
-        if (itemStack.getType().equals(Material.MILK_BUCKET) && playerStats.getUhcClass().equals(UhcClass.ARCHER)) {
-            player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, PotionEffect.INFINITE_DURATION, 0, false, false, false));
+        if (playerStats.getUhcClass() != null) {
+            if (itemStack.getType().equals(Material.MILK_BUCKET) && playerStats.getUhcClass().equals(UhcClass.ARCHER)) {
+                new DelayedTask(() -> {
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, PotionEffect.INFINITE_DURATION, 0, false, false, false));
+                }, 1);
+            }
         }
     }
 

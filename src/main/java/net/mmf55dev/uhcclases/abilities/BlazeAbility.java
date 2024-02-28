@@ -4,6 +4,7 @@ import net.mmf55dev.uhcclases.EspectralClassUHC;
 import net.mmf55dev.uhcclases.classes.UhcClass;
 import net.mmf55dev.uhcclases.player.PlayerData;
 import net.mmf55dev.uhcclases.player.PlayerStats;
+import net.mmf55dev.uhcclases.utils.DelayedTask;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -24,29 +25,19 @@ public class BlazeAbility implements Listener {
         Player player = e.getPlayer();
         ItemStack itemStack = e.getItem();
         PlayerStats playerStats = PlayerData.get(player.getUniqueId());
-        if (itemStack.getType().equals(Material.MILK_BUCKET) && playerStats.getUhcClass().equals(UhcClass.BLAZE)) {
-            player.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, PotionEffect.INFINITE_DURATION, 0, false, false, false));
+        player.sendMessage(itemStack.getType().toString());
+        if (playerStats.getUhcClass() != null) {
+            if (itemStack.getType().equals(Material.MILK_BUCKET) && playerStats.getUhcClass().equals(UhcClass.BLAZE)) {
+                new DelayedTask(() -> {
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, PotionEffect.INFINITE_DURATION, 0, false, false, false));
+                }, 1);
+            }
         }
     }
 
     public static void init(Player player) {
-        PlayerStats playerStats = PlayerData.get(player.getUniqueId());
         player.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, PotionEffect.INFINITE_DURATION, 0, false, false, false));
-        if (playerStats.getUhcClass().equals(UhcClass.BLAZE)) {
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    if (playerStats.isActive() && player.isOnline()) {
-                        player.setFireTicks(20);
-                        if (player.isInWater() && !player.isInsideVehicle()) {
-                            player.damage(2);
-                        }
-                    } else {
-                        cancel();
-                    }
-                }
-            }.runTaskTimer(EspectralClassUHC.getPlugin(EspectralClassUHC.class), 0, 20);
-        }
+        player.setVisualFire(true);
     }
     public static void checkForPlayersInWater() {
         Server server = Bukkit.getServer();
@@ -55,12 +46,13 @@ public class BlazeAbility implements Listener {
             public void run() {
                 for (Player player : server.getOnlinePlayers()) {
                     PlayerStats playerStats = PlayerData.get(player.getUniqueId());
-                    if (playerStats.getUhcClass().equals(UhcClass.BLAZE)) {
-                        if (!player.isVisualFire()) {
-                            player.setVisualFire(true);
-                        }
-                        if (player.isInWater() && !player.isInsideVehicle()) {
-                            player.damage(2);
+                    if (playerStats.getUhcClass() != null) {
+                        if (playerStats.getUhcClass().equals(UhcClass.BLAZE) && playerStats.isActive()) {
+                            if (player.isInWater() && !player.isInsideVehicle()) {
+                                player.damage(2);
+                            }
+                        } else {
+                            player.setVisualFire(false);
                         }
                     }
                 }

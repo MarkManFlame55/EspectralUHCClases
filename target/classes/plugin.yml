@@ -1,5 +1,5 @@
 name: UHCClases
-version: '1.1-SNAPSHOT'
+version: '1.2-SNAPSHOT'
 main: net.mmf55dev.uhcclases.EspectralClassUHC
 api-version: '1.20'
 commands:

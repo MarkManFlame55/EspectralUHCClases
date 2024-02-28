@@ -31,13 +31,13 @@ public class AssassinAbility implements Listener {
                 if (!this.cooldown.containsKey(player.getUniqueId())) {
                     this.cooldown.put(player.getUniqueId(), System.currentTimeMillis());
                     performAbility(player);
-                    AbilityUtils.notifyWhenFinish(player, cooldown, Time.minutes(2));
+                    //AbilityUtils.notifyWhenFinish(player, cooldown, Time.minutes(2));
                 } else {
                     long timeElapsed = System.currentTimeMillis() - cooldown.get(player.getUniqueId());
                     if (timeElapsed >= Time.minutes(2)) {
                         this.cooldown.put(player.getUniqueId(), System.currentTimeMillis());
                         performAbility(player);
-                        AbilityUtils.notifyWhenFinish(player, cooldown, Time.minutes(2));
+                        //AbilityUtils.notifyWhenFinish(player, cooldown, Time.minutes(2));
                     } else {
                         ServerMessage.unicastTo(player, ChatColor.RED + "Tu habilidad sigue en cooldown!" + ChatColor.GRAY + " (" + Time.getRemainTime(timeElapsed, Time.minutes(2)) + "s)");
                     }

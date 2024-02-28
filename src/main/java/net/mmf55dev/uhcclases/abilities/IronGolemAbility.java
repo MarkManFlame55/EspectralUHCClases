@@ -4,6 +4,7 @@ import net.mmf55dev.uhcclases.EspectralClassUHC;
 import net.mmf55dev.uhcclases.classes.UhcClass;
 import net.mmf55dev.uhcclases.player.PlayerData;
 import net.mmf55dev.uhcclases.player.PlayerStats;
+import net.mmf55dev.uhcclases.utils.DelayedTask;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -22,13 +23,18 @@ public class IronGolemAbility implements Listener {
         Player player = e.getPlayer();
         PlayerStats playerStats = PlayerData.get(player.getUniqueId());
         ItemStack itemStack = e.getItem();
-        if (itemStack.getType().equals(Material.MILK_BUCKET) && playerStats.getUhcClass().equals(UhcClass.IRON_GOLEM)) {
-            player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20, 1, false, false, false));
-            player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20, 1, false, false, false));
+        if (playerStats.getUhcClass() != null) {
+            if (itemStack.getType().equals(Material.MILK_BUCKET) && playerStats.getUhcClass().equals(UhcClass.IRON_GOLEM)) {
+                new DelayedTask(() -> {
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, PotionEffect.INFINITE_DURATION, 1, false, false, false));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, PotionEffect.INFINITE_DURATION, 1, false, false, false));
+                }, 1);
+
+            }
         }
     }
     public static void init(Player player) {
-        player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20, 1, false, false, false));
-        player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20, 1, false, false, false));
+        player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, PotionEffect.INFINITE_DURATION, 1, false, false, false));
+        player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, PotionEffect.INFINITE_DURATION, 1, false, false, false));
     }
 }

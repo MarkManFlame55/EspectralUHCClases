@@ -60,6 +60,9 @@ public class ClassManager {
         Server server = Bukkit.getServer();
         hasStarted = false;
         for (Player serverPlayers : server.getOnlinePlayers()) {
+            if (serverPlayers.isVisualFire()) {
+                serverPlayers.setVisualFire(false);
+            }
             PlayerData.get(serverPlayers.getUniqueId()).setActive(false);
             PlayerData.get(serverPlayers.getUniqueId()).setUhcClass(null);
         }
