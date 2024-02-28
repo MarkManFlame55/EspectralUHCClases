@@ -50,7 +50,7 @@ public class ClassManager {
         Server server = Bukkit.getServer();
         for (Player serverPlayers : server.getOnlinePlayers()) {
             PlayerData.get(serverPlayers.getUniqueId()).setActive(false);
-            PlayerData.get(serverPlayers.getUniqueId()).setUhcClass(UhcClass.NULL);
+            PlayerData.get(serverPlayers.getUniqueId()).setUhcClass(null);
         }
         ServerMessage.multicastToOp(ChatColor.GREEN + "Clases Reiniciadas");
     }

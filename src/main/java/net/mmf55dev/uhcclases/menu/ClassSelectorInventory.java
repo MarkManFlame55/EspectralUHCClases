@@ -56,7 +56,7 @@ public class ClassSelectorInventory implements Listener {
                 if (itemStack.equals(MenuItems.ClassItem())) {
                     UhcClass playerClass = playerStats.getUhcClass();
                     if (playerClass != null) {
-                        player.sendMessage(ChatColor.GREEN + "Ahora mismo eres: " + playerClass.getName());
+                        player.sendMessage(ChatColor.GREEN + "Ahora mismo eres: " + playerClass);
                     } else {
                         player.sendMessage(ChatColor.RED + "Aun no has elegido una clase");
                     }

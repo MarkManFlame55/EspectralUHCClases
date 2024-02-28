@@ -91,6 +91,7 @@ public class ArcherItem implements Listener {
     }
     private void performAbiility(Player player, PlayerStats playerStats) {
         World world = player.getWorld();
+
         new BukkitRunnable() {
             int seconds = 0;
             @Override

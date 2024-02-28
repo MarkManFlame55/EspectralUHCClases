@@ -4,36 +4,45 @@ import net.mmf55dev.uhcclases.EspectralClassUHC;
 import net.mmf55dev.uhcclases.classes.UhcClass;
 import net.mmf55dev.uhcclases.player.PlayerData;
 import net.mmf55dev.uhcclases.player.PlayerStats;
+import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.player.PlayerItemConsumeEvent;
+import org.bukkit.event.player.PlayerPortalEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class DolphinAbility {
-    public static void init(Player player) {
+
+    @EventHandler
+    public static void onPlayerConsume(PlayerItemConsumeEvent e) {
+        Player player = e.getPlayer();
+        ItemStack itemStack = e.getItem();
+        World world = player.getWorld();
         PlayerStats playerStats = PlayerData.get(player.getUniqueId());
-        if (playerStats.isActive()) {
-            if (playerStats.getUhcClass().equals(UhcClass.DOLPHIN)) {
-                new BukkitRunnable() {
-                    @Override
-                    public void run() {
-                        if (playerStats.isActive()) {
-                            World world = player.getWorld();
-                            if (player.isOnline()) {
-                                player.addPotionEffect(new PotionEffect(PotionEffectType.DOLPHINS_GRACE, 20, 0, false, false, false));
-                                player.addPotionEffect(new PotionEffect(PotionEffectType.CONDUIT_POWER, 20, 0 ,false, false, false));
-                                if (world.getEnvironment().equals(World.Environment.NETHER)) {
-                                    player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 20, 1, false, false, false));
-                                    player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20, 1, false, false, false));
-                                }
-                            }
-                        } else {
-                            cancel();
-                        }
-                    }
-                }.runTaskTimer(EspectralClassUHC.getPlugin(EspectralClassUHC.class), 0, 1);
+        if (itemStack.getType().equals(Material.MILK_BUCKET) && playerStats.getUhcClass().equals(UhcClass.DOLPHIN)) {
+            player.addPotionEffect(new PotionEffect(PotionEffectType.DOLPHINS_GRACE, PotionEffect.INFINITE_DURATION, 0, false, false, false));
+            player.addPotionEffect(new PotionEffect(PotionEffectType.CONDUIT_POWER, PotionEffect.INFINITE_DURATION, 0 ,false, false, false));
+            if (world.getEnvironment().equals(World.Environment.NETHER)) {
+                player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 20, 1, false, false, false));
+                player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20, 1, false, false, false));
             }
         }
+    }
+    @EventHandler
+    public static void onPortalEnter(PlayerPortalEvent e) {
+        Player player = e.getPlayer();
+        World world = e.getTo().getWorld();
+        if (world != null && world.getEnvironment().equals(World.Environment.NETHER)) {
+            player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 20, 1, false, false, false));
+            player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20, 1, false, false, false));
+        }
+    }
+    public static void init(Player player) {
+        player.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, PotionEffect.INFINITE_DURATION, 0, false, false, false));
     }
 }
