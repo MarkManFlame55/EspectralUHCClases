@@ -30,7 +30,7 @@ public class SleepyItem implements Listener {
                 itemStack.setAmount(0);
                 world.playSound(player.getLocation(), Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 3.0f, 0.8f);
                 world.playSound(player.getLocation(), Sound.ITEM_TRIDENT_THUNDER, 3.0f, 1.0f);
-                world.createExplosion(player.getLocation(), 18.0f);
+                world.createExplosion(player.getLocation(), 12.0f, false, true, player);
             }
         }
     }

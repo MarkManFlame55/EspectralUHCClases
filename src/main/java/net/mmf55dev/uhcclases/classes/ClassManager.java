@@ -39,9 +39,6 @@ public class ClassManager {
                 if (playerClass.equals(UhcClass.ARCHER)) {
                     ArcherAbility.init(player);
                 }
-                if (playerClass.equals(UhcClass.RABBIT)) {
-                    RabbitAbility.init(player);
-                }
                 if (playerClass.equals(UhcClass.WITCH)) {
                     WitchAbility.init(player);
                 }

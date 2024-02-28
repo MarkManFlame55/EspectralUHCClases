@@ -3,7 +3,6 @@ net\mmf55dev\uhcclases\abilities\BlazeAbility.class
 net\mmf55dev\uhcclases\items\MenuItems.class
 net\mmf55dev\uhcclases\utils\AbilityUtils$2.class
 net\mmf55dev\uhcclases\items\SleepyItem.class
-net\mmf55dev\uhcclases\abilities\RabbitAbility$1.class
 net\mmf55dev\uhcclases\abilities\AssassinAbility.class
 net\mmf55dev\uhcclases\classes\ClassManager.class
 net\mmf55dev\uhcclases\utils\Time.class
@@ -16,7 +15,6 @@ net\mmf55dev\uhcclases\abilities\DolphinAbility$1.class
 net\mmf55dev\uhcclases\items\ArcherItem$1.class
 net\mmf55dev\uhcclases\abilities\SleepyAbiility.class
 net\mmf55dev\uhcclases\utils\PlayerJumpEvent.class
-net\mmf55dev\uhcclases\abilities\RabbitAbility.class
 net\mmf55dev\uhcclases\utils\AbilityUtils$1.class
 net\mmf55dev\uhcclases\items\SelectorItem.class
 net\mmf55dev\uhcclases\abilities\BlazeAbility$1.class

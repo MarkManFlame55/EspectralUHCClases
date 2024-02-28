@@ -29,7 +29,7 @@ public class uhcclassCommand implements CommandExecutor, TabCompleter {
 
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
-        if (commandSender instanceof Player player && player.isOp()) {
+        if (commandSender instanceof Player player) {
             if (strings.length == 0) {
                 ServerMessage.unicastTo(player, ChatColor.RED + "Comando Incompleto");
             } else {
@@ -50,6 +50,8 @@ public class uhcclassCommand implements CommandExecutor, TabCompleter {
                         break;
                 }
             }
+        } else {
+            commandSender.sendMessage("No puedes ejecutar este comando!");
         }
         return false;
     }

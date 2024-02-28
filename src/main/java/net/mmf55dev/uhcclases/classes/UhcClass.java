@@ -17,9 +17,6 @@ public class UhcClass {
     public static UhcClass DOLPHIN = new UhcClass("dolphin");
     public static UhcClass ARCHER = new UhcClass("archer");
     public static UhcClass SLEEPY = new UhcClass("sleepy");
-
     public static UhcClass WITCH = new UhcClass("witch");
-    public static UhcClass RABBIT = new UhcClass("rabbit");
-
     public static UhcClass NULL = new UhcClass("null");
 }

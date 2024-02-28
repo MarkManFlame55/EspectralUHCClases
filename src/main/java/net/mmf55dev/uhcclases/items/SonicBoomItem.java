@@ -105,7 +105,7 @@ public class SonicBoomItem implements Listener {
                                     player.setCooldown(Material.SHIELD, 5*20);
                                 }
                             }
-                            ((Damageable) entity).damage(35,p);
+                            ((Damageable) entity).damage(30,p);
                             p.playSound(p, Sound.ENTITY_WARDEN_ATTACK_IMPACT, 1.0f, 1.0f);
                             this.cancel();
                             return;
