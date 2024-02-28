@@ -1,6 +1,7 @@
 package net.mmf55dev.uhcclases.items;
 
 import net.mmf55dev.uhcclases.EspectralClassUHC;
+import net.mmf55dev.uhcclases.cache.DynamicCache;
 import net.mmf55dev.uhcclases.classes.UhcClass;
 import net.mmf55dev.uhcclases.player.PlayerData;
 import net.mmf55dev.uhcclases.player.PlayerStats;
@@ -27,10 +28,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 public class ArcherItem implements Listener {
 
     private final HashMap<UUID, Long> cooldown;
+    private final DynamicCache<UUID, ItemStack> cooldownCache = new DynamicCache<>(1, TimeUnit.MINUTES);
     public ArcherItem() {this.cooldown = new HashMap<>();}
 
     @EventHandler
@@ -44,13 +47,12 @@ public class ArcherItem implements Listener {
                     if (!this.cooldown.containsKey(player.getUniqueId())) {
                         this.cooldown.put(player.getUniqueId(), System.currentTimeMillis());
                         performAbiility(player, playerStats);
-                        //AbilityUtils.notifyWhenFinish(player, cooldown, Time.minutes(1), itemStack);
                     } else {
                         long timeElapsed = System.currentTimeMillis() - cooldown.get(player.getUniqueId());
                         if (timeElapsed >= Time.minutes(1)) {
                             this.cooldown.put(player.getUniqueId(), System.currentTimeMillis());
                             performAbiility(player, playerStats);
-                            //AbilityUtils.notifyWhenFinish(player, cooldown, Time.minutes(1), itemStack);
+
                         } else {
                             ServerMessage.unicastTo(player, itemStack.getItemMeta().getDisplayName() + ChatColor.RED + " sigue en cooldown!" + ChatColor.GRAY + " (" + Time.getRemainTime(timeElapsed, Time.minutes(1)) + "s)");
                         }
