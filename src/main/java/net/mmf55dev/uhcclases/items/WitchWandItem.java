@@ -44,13 +44,13 @@ public class WitchWandItem implements Listener {
                     if (!this.cooldown.containsKey(player.getUniqueId())) {
                         this.cooldown.put(player.getUniqueId(), System.currentTimeMillis());
                         performAbility(player);
-                        AbilityUtils.notifyWhenFinish(player, cooldown, Time.minutes(1), itemStack);
+                        //AbilityUtils.notifyWhenFinish(player, cooldown, Time.minutes(1), itemStack);
                     } else {
                         long timeElapsed = System.currentTimeMillis() - cooldown.get(player.getUniqueId());
                         if (timeElapsed >= Time.minutes(1)) {
                             this.cooldown.put(player.getUniqueId(), System.currentTimeMillis());
                             performAbility(player);
-                            AbilityUtils.notifyWhenFinish(player, cooldown, Time.minutes(1), itemStack);
+                            //AbilityUtils.notifyWhenFinish(player, cooldown, Time.minutes(1), itemStack);
                         } else {
                             ServerMessage.unicastTo(player, itemStack.getItemMeta().getDisplayName() + ChatColor.RED + " sigue en cooldown!" + ChatColor.GRAY + " (" + Time.getRemainTime(timeElapsed, Time.minutes(1)) + "s)");
                         }

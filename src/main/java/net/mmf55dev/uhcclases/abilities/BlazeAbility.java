@@ -4,8 +4,10 @@ import net.mmf55dev.uhcclases.EspectralClassUHC;
 import net.mmf55dev.uhcclases.classes.UhcClass;
 import net.mmf55dev.uhcclases.player.PlayerData;
 import net.mmf55dev.uhcclases.player.PlayerStats;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -35,7 +37,7 @@ public class BlazeAbility implements Listener {
                 @Override
                 public void run() {
                     if (playerStats.isActive() && player.isOnline()) {
-                        player.setFireTicks(10);
+                        player.setFireTicks(20);
                         if (player.isInWater() && !player.isInsideVehicle()) {
                             player.damage(2);
                         }
@@ -43,7 +45,26 @@ public class BlazeAbility implements Listener {
                         cancel();
                     }
                 }
-            }.runTaskTimer(EspectralClassUHC.getPlugin(EspectralClassUHC.class), 0, 10);
+            }.runTaskTimer(EspectralClassUHC.getPlugin(EspectralClassUHC.class), 0, 20);
         }
+    }
+    public static void checkForPlayersInWater() {
+        Server server = Bukkit.getServer();
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                for (Player player : server.getOnlinePlayers()) {
+                    PlayerStats playerStats = PlayerData.get(player.getUniqueId());
+                    if (playerStats.getUhcClass().equals(UhcClass.BLAZE)) {
+                        if (!player.isVisualFire()) {
+                            player.setVisualFire(true);
+                        }
+                        if (player.isInWater() && !player.isInsideVehicle()) {
+                            player.damage(2);
+                        }
+                    }
+                }
+            }
+        }.runTaskTimer(EspectralClassUHC.getPlugin(EspectralClassUHC.class), 0, 20);
     }
 }

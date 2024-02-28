@@ -47,14 +47,14 @@ public class SonicBoomItem implements Listener {
                                 this.cooldown.put(player.getUniqueId(), System.currentTimeMillis());
                                 particleBeam(player);
                                 player.playSound(player, Sound.ENTITY_WARDEN_SONIC_BOOM, 1.0f, 0.9f);
-                                AbilityUtils.notifyWhenFinish(player, cooldown, Time.seconds(30), item);
+                                //AbilityUtils.notifyWhenFinish(player, cooldown, Time.seconds(30), item);
                             } else {
                                 long timeElapsed = System.currentTimeMillis() - cooldown.get(player.getUniqueId());
                                 if (timeElapsed >= Time.seconds(30)) {
                                     this.cooldown.put(player.getUniqueId(), System.currentTimeMillis());
                                     particleBeam(player);
                                     player.playSound(player, Sound.ENTITY_WARDEN_SONIC_BOOM, 1.0f, 0.9f);
-                                    AbilityUtils.notifyWhenFinish(player, cooldown, Time.seconds(30), item);
+                                    //AbilityUtils.notifyWhenFinish(player, cooldown, Time.seconds(30), item);
                                 } else {
                                     ServerMessage.unicastTo(player, item.getItemMeta().getDisplayName() + ChatColor.RED + " sigue en cooldown!" + ChatColor.GRAY + " (" + Time.getRemainTime(timeElapsed, Time.seconds(30)) + "s)");
                                 }
@@ -121,7 +121,7 @@ public class SonicBoomItem implements Listener {
                 particleLoc.add(vecOffset);
                 world.spawnParticle(Particle.SONIC_BOOM, particleLoc, 0);
             }
-        }.runTaskTimer(EspectralClassUHC.getPlugin(EspectralClassUHC.class), 0, 1);
+        }.runTaskTimerAsynchronously(EspectralClassUHC.getPlugin(EspectralClassUHC.class), 0, 1);
 
     }
 

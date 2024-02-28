@@ -1,10 +1,11 @@
 package net.mmf55dev.uhcclases;
 
-import net.mmf55dev.uhcclases.abilities.AssassinAbility;
+import net.mmf55dev.uhcclases.abilities.*;
 import net.mmf55dev.uhcclases.commands.uhcclassCommand;
 import net.mmf55dev.uhcclases.items.*;
 import net.mmf55dev.uhcclases.menu.ClassSelectorInventory;
 import net.mmf55dev.uhcclases.utils.PlayerJumpEvent;
+import org.bukkit.entity.Warden;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class EspectralClassUHC extends JavaPlugin {
@@ -21,6 +22,12 @@ public final class EspectralClassUHC extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new SleepyItem(), this);
         getServer().getPluginManager().registerEvents(new ArcherItem(), this);
         getServer().getPluginManager().registerEvents(new WitchWandItem(), this);
+        getServer().getPluginManager().registerEvents(new ArcherAbility(), this);
+        getServer().getPluginManager().registerEvents(new BlazeAbility(), this);
+        getServer().getPluginManager().registerEvents(new DolphinAbility(), this);
+        getServer().getPluginManager().registerEvents(new IronGolemAbility(), this);
+        getServer().getPluginManager().registerEvents(new WardenAbility(), this);
+
     }
 
     @Override

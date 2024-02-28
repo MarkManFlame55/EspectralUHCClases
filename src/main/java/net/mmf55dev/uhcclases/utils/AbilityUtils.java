@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.UUID;
 
 public class AbilityUtils {
+    /*
     public static void notifyWhenFinish(Player player, HashMap<UUID, Long> cooldown, long finishTime, ItemStack itemStack) {
         new BukkitRunnable() {
             @Override
@@ -37,4 +38,5 @@ public class AbilityUtils {
             }
         }.runTaskTimer(EspectralClassUHC.getPlugin(EspectralClassUHC.class), 0, 1);
     }
+     */
 }
