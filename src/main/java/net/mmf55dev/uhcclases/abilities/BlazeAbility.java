@@ -7,11 +7,12 @@ import net.mmf55dev.uhcclases.player.PlayerStats;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Listener;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
-public class BlazeAbility {
+public class BlazeAbility implements Listener {
     public static void init(Player player) {
         PlayerStats playerStats = PlayerData.get(player.getUniqueId());
         if (playerStats.getUhcClass().equals(UhcClass.BLAZE)) {
@@ -21,10 +22,11 @@ public class BlazeAbility {
                     if (playerStats.isActive()) {
                         if (player.isOnline()) {
                             player.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 20, 0, false, false, false));
-                            Location pos = player.getLocation();
                             player.setFireTicks(2);
-                            if (pos.getBlock().getType().equals(Material.WATER)) {
-                                player.damage(2);
+                            if (player.isInWater()) {
+                                if (!player.isInsideVehicle()) {
+                                    player.damage(2);
+                                }
                             }
                         }
                     } else {

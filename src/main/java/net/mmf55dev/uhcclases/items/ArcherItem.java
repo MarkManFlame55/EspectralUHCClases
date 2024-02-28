@@ -4,9 +4,10 @@ import net.mmf55dev.uhcclases.EspectralClassUHC;
 import net.mmf55dev.uhcclases.classes.UhcClass;
 import net.mmf55dev.uhcclases.player.PlayerData;
 import net.mmf55dev.uhcclases.player.PlayerStats;
+import net.mmf55dev.uhcclases.utils.AbilityUtils;
+import net.mmf55dev.uhcclases.utils.ServerMessage;
 import net.mmf55dev.uhcclases.utils.Time;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
@@ -39,20 +40,23 @@ public class ArcherItem implements Listener {
         ItemStack itemStack = e.getItem();
         if (e.getAction().equals(Action.LEFT_CLICK_AIR) || e.getAction().equals(Action.LEFT_CLICK_BLOCK)) {
             if (itemStack != null && itemStack.getItemMeta().getLocalizedName().equalsIgnoreCase("archer_weapon")) {
-                if (playerStats.isActive()) {
+                if (playerStats.isActive() && playerStats.getUhcClass().equals(UhcClass.ARCHER)) {
                     if (!this.cooldown.containsKey(player.getUniqueId())) {
                         this.cooldown.put(player.getUniqueId(), System.currentTimeMillis());
                         performAbiility(player, playerStats);
+                        AbilityUtils.notifyWhenFinish(player, cooldown, Time.minutes(1), itemStack);
                     } else {
                         long timeElapsed = System.currentTimeMillis() - cooldown.get(player.getUniqueId());
                         if (timeElapsed >= Time.minutes(1)) {
                             this.cooldown.put(player.getUniqueId(), System.currentTimeMillis());
                             performAbiility(player, playerStats);
+                            AbilityUtils.notifyWhenFinish(player, cooldown, Time.minutes(1), itemStack);
                         } else {
-                            player.sendMessage(itemStack.getItemMeta().getDisplayName() + ChatColor.RED + " sigue en cooldown");
+                            ServerMessage.unicastTo(player, itemStack.getItemMeta().getDisplayName() + ChatColor.RED + " sigue en cooldown!" + ChatColor.GRAY + " (" + Time.getRemainTime(timeElapsed, Time.minutes(1)) + "s)");
                         }
                     }
-
+                } else {
+                    ServerMessage.unicastTo(player, ChatColor.RED + "No puedes usar esta habilidad");
                 }
             }
         }
@@ -63,7 +67,7 @@ public class ArcherItem implements Listener {
              if (e.getDamager() instanceof Arrow arrow) {
                  if (arrow.getShooter() instanceof Player player) {
                      PlayerStats playerStats = PlayerData.get(player.getUniqueId());
-                     if (playerStats.getUhcClass().equals(UhcClass.ARCHER) && playerStats.isArcherActive()) {
+                     if (playerStats.isArcherActive()) {
                          e.setDamage(e.getDamage()*2);
                      }
                  }
@@ -86,13 +90,16 @@ public class ArcherItem implements Listener {
         return itemStack;
     }
     private void performAbiility(Player player, PlayerStats playerStats) {
+        World world = player.getWorld();
         new BukkitRunnable() {
             int seconds = 0;
             @Override
             public void run() {
                 if (seconds <= 5) {
-                    player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 21, 255, false, false, false));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 21, 250, false, false, false));
                     player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 21, 127, false, false, false));
+                    world.playSound(player.getLocation(), Sound.ENTITY_WITHER_AMBIENT, 1.0f, 1.0f);
+                    world.spawnParticle(Particle.CRIT, player.getLocation(), 5, 1, 1, 1);
                     playerStats.setArcherActive(true);
                     seconds++;
                 } else {

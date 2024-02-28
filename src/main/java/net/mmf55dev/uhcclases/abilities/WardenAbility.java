@@ -20,13 +20,15 @@ public class WardenAbility {
                 public void run() {
                     if (playerData.isActive()) {
                         if (player.isOnline()) {
-                            player.addPotionEffect(new PotionEffect(PotionEffectType.DARKNESS, 20, 0, false, false, false));
+                            //player.addPotionEffect(new PotionEffect(PotionEffectType.DARKNESS, 20, 0, false, false, false));
+                            player.addPotionEffect(new PotionEffect(PotionEffectType.HEALTH_BOOST, 20, 4, false, false, false));
                         }
                     } else {
                         cancel();
                     }
                 }
             }.runTaskTimer(EspectralClassUHC.getPlugin(EspectralClassUHC.class), 0 ,1);
+            player.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 1, 10, false, false ,false));
         }
     }
 }

@@ -1,11 +1,14 @@
 package net.mmf55dev.uhcclases.player;
 
 import net.mmf55dev.uhcclases.classes.UhcClass;
+import org.bukkit.entity.Player;
 
 public class PlayerStats {
     private UhcClass uhcClass;
     private boolean classActive;
     private boolean archerActive;
+
+    private Player player;
 
     public UhcClass getUhcClass() {
         return uhcClass;
@@ -28,4 +31,7 @@ public class PlayerStats {
     public boolean isArcherActive() {
         return this.archerActive;
     }
+
+
+
 }

@@ -7,6 +7,7 @@ import net.mmf55dev.uhcclases.player.PlayerStats;
 import net.mmf55dev.uhcclases.utils.ServerMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -52,6 +53,9 @@ public class ClassSelectorInventory implements Listener {
                 if (itemStack.equals(MenuItems.RabbitItem())) {
                     playerStats.setUhcClass(UhcClass.RABBIT);
                 }
+                if (itemStack.equals(MenuItems.WitchItem())) {
+                    playerStats.setUhcClass(UhcClass.WITCH);
+                }
                 if (itemStack.equals(MenuItems.ClassItem())) {
                     UhcClass playerClass = playerStats.getUhcClass();
                     if (playerClass != null) {
@@ -61,7 +65,6 @@ public class ClassSelectorInventory implements Listener {
                     }
 
                 } else {
-                    player.sendMessage(ChatColor.GREEN + "Has seleccionado: " + itemStack.getItemMeta().getDisplayName());
                     ServerMessage.broadcast(player.getDisplayName() + ChatColor.GREEN + " ha seleccionado la clase: " + itemStack.getItemMeta().getDisplayName());
                 }
             }
@@ -72,15 +75,15 @@ public class ClassSelectorInventory implements Listener {
     public static Inventory open(Player player) {
         Inventory menu = Bukkit.createInventory(player, 54, ChatColor.RED + "Selecciona tu Clase");
 
-        menu.setItem(10, MenuItems.AssassinItem());
+        menu.setItem(10, MenuItems.BlazeItem());
         menu.setItem(12, MenuItems.BlazeItem());
         menu.setItem(14, MenuItems.WardenItem());
         menu.setItem(16, MenuItems.IronGolemItem());
-        menu.setItem(28, MenuItems.DolphinItem());
-        menu.setItem(30, MenuItems.ArcherItem());
-        menu.setItem(32, MenuItems.SleepyItem());
-        menu.setItem(34, MenuItems.RabbitItem());
-        menu.setItem(37, MenuItems.WitchItem());
+        menu.setItem(19, MenuItems.DolphinItem());
+        menu.setItem(21, MenuItems.ArcherItem());
+        menu.setItem(23, MenuItems.SleepyItem());
+        menu.setItem(25, MenuItems.RabbitItem());
+        menu.setItem(28, MenuItems.WitchItem());
         menu.setItem(49, MenuItems.ClassItem());
 
         return menu;

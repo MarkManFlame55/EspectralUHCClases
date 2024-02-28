@@ -4,6 +4,8 @@ import net.mmf55dev.uhcclases.EspectralClassUHC;
 import net.mmf55dev.uhcclases.classes.UhcClass;
 import net.mmf55dev.uhcclases.player.PlayerData;
 import net.mmf55dev.uhcclases.player.PlayerStats;
+import net.mmf55dev.uhcclases.utils.AbilityUtils;
+import net.mmf55dev.uhcclases.utils.ServerMessage;
 import net.mmf55dev.uhcclases.utils.Time;
 import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
@@ -33,33 +35,35 @@ public class SonicBoomItem implements Listener {
     //.
     @EventHandler
     public void onRightClick(PlayerInteractEvent e) {
-        Player p = e.getPlayer();
+        Player player = e.getPlayer();
         ItemStack item = e.getItem();
-        PlayerStats playerData = PlayerData.get(p.getUniqueId());
+        PlayerStats playerData = PlayerData.get(player.getUniqueId());
         if (e.getAction().equals(Action.RIGHT_CLICK_AIR) || e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
             if (item != null) {
                 if (item.equals(SonicBoomItem.giveItem())) {
                     if (playerData.isActive()) {
                         if (playerData.getUhcClass().equals(UhcClass.WARDEN)) {
-                            if (!this.cooldown.containsKey(p.getUniqueId())) {
-                                this.cooldown.put(p.getUniqueId(), System.currentTimeMillis());
-                                particleBeam(p);
-                                p.playSound(p, Sound.ENTITY_WARDEN_SONIC_BOOM, 1.0f, 0.9f);
+                            if (!this.cooldown.containsKey(player.getUniqueId())) {
+                                this.cooldown.put(player.getUniqueId(), System.currentTimeMillis());
+                                particleBeam(player);
+                                player.playSound(player, Sound.ENTITY_WARDEN_SONIC_BOOM, 1.0f, 0.9f);
+                                AbilityUtils.notifyWhenFinish(player, cooldown, Time.seconds(30), item);
                             } else {
-                                long timeElapsed = System.currentTimeMillis() - cooldown.get(p.getUniqueId());
+                                long timeElapsed = System.currentTimeMillis() - cooldown.get(player.getUniqueId());
                                 if (timeElapsed >= Time.seconds(30)) {
-                                    this.cooldown.put(p.getUniqueId(), System.currentTimeMillis());
-                                    particleBeam(p);
-                                    p.playSound(p, Sound.ENTITY_WARDEN_SONIC_BOOM, 1.0f, 0.9f);
+                                    this.cooldown.put(player.getUniqueId(), System.currentTimeMillis());
+                                    particleBeam(player);
+                                    player.playSound(player, Sound.ENTITY_WARDEN_SONIC_BOOM, 1.0f, 0.9f);
+                                    AbilityUtils.notifyWhenFinish(player, cooldown, Time.seconds(30), item);
                                 } else {
-                                    p.sendMessage(item.getItemMeta().getDisplayName() + ChatColor.RED + " sigue en cooldown!");
+                                    ServerMessage.unicastTo(player, item.getItemMeta().getDisplayName() + ChatColor.RED + " sigue en cooldown!" + ChatColor.GRAY + " (" + Time.getRemainTime(timeElapsed, Time.seconds(30)) + "s)");
                                 }
                             }
                         } else {
-                            p.sendMessage(ChatColor.RED + "No puedes usar este objeto, no eres un Warden >:(");
+                            ServerMessage.unicastTo(player,  ChatColor.RED + "No puedes usar este item, no eres un Warden");
                         }
                     } else {
-                        p.sendMessage(ChatColor.RED + "Aun no puedes usar este item");
+                        ServerMessage.unicastTo(player, ChatColor.RED + "Aun no puedes usar este item");
                     }
                 }
             }
@@ -96,6 +100,11 @@ public class SonicBoomItem implements Listener {
                                 particleLoc.getZ() + 0.75);
 
                         if(entity.getBoundingBox().overlaps(particleMinVector,particleMaxVector)){
+                            if (entity instanceof Player player) {
+                                if (player.isBlocking()) {
+                                    player.setCooldown(Material.SHIELD, 5*20);
+                                }
+                            }
                             ((Damageable) entity).damage(35,p);
                             p.playSound(p, Sound.ENTITY_WARDEN_ATTACK_IMPACT, 1.0f, 1.0f);
                             this.cancel();
@@ -121,7 +130,7 @@ public class SonicBoomItem implements Listener {
         ItemStack itemStack = new ItemStack(Material.ECHO_SHARD);
         ItemMeta itemMeta = itemStack.getItemMeta();
         assert itemMeta != null;
-        itemMeta.setDisplayName(ChatColor.DARK_AQUA + "Sonic Crystal");
+        itemMeta.setDisplayName(ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "Sonic Crystal");
         itemMeta.setLocalizedName("sonic_crystal");
         itemMeta.addEnchant(Enchantment.DURABILITY, 1, false);
         itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);

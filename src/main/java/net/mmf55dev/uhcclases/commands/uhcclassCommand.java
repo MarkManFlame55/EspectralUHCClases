@@ -2,6 +2,7 @@ package net.mmf55dev.uhcclases.commands;
 
 import net.mmf55dev.uhcclases.classes.ClassManager;
 import net.mmf55dev.uhcclases.items.SelectorItem;
+import net.mmf55dev.uhcclases.utils.ServerMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -30,7 +31,7 @@ public class uhcclassCommand implements CommandExecutor, TabCompleter {
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
         if (commandSender instanceof Player player && player.isOp()) {
             if (strings.length == 0) {
-                player.sendMessage(ChatColor.RED + "Comando Incompleto");
+                ServerMessage.unicastTo(player, ChatColor.RED + "Comando Incompleto");
             } else {
                 Server server = Bukkit.getServer();
                 switch (strings[0]) {

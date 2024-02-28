@@ -5,11 +5,12 @@ import net.mmf55dev.uhcclases.classes.UhcClass;
 import net.mmf55dev.uhcclases.player.PlayerData;
 import net.mmf55dev.uhcclases.player.PlayerStats;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Listener;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
-public class RabbitAbility {
+public class RabbitAbility implements Listener {
     public static void init(Player player) {
         PlayerStats playerStats = PlayerData.get(player.getUniqueId());
         if (playerStats.getUhcClass().equals(UhcClass.RABBIT)) {
