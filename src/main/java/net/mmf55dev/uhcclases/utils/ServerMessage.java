@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 
 public class ServerMessage {
 
-    private static final String prefix = ChatColor.WHITE + "" + ChatColor.BOLD + "[" + ChatColor.AQUA + ChatColor.BOLD + "UHC Clases" + ChatColor.WHITE + ChatColor.BOLD + "] " + ChatColor.GRAY + "➤ ";
+    private static final String prefix = ChatColor.WHITE + "" + ChatColor.BOLD + "[" + ChatColor.AQUA + ChatColor.BOLD + "UHC Clases" + ChatColor.WHITE + ChatColor.BOLD + "] " + ChatColor.GRAY + "➤ " + ChatColor.RESET;
 
 
     public static void broadcast(String message) {

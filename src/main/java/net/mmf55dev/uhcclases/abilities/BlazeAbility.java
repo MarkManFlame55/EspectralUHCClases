@@ -37,7 +37,9 @@ public class BlazeAbility implements Listener {
 
     public static void init(Player player) {
         player.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, PotionEffect.INFINITE_DURATION, 0, false, false, false));
-        player.setVisualFire(true);
+        if (PlayerData.get(player.getUniqueId()).wantToSeeFire()) {
+            player.setVisualFire(true);
+        }
     }
     public static void checkForPlayersInWater() {
         Server server = Bukkit.getServer();

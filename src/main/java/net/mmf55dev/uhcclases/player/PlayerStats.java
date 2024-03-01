@@ -7,8 +7,7 @@ public class PlayerStats {
     private UhcClass uhcClass;
     private boolean classActive;
     private boolean archerActive;
-
-    private Player player;
+    private boolean canSeeFire;
 
     public UhcClass getUhcClass() {
         return uhcClass;
@@ -23,6 +22,13 @@ public class PlayerStats {
     }
     public boolean isActive() {
         return this.classActive;
+    }
+
+    public boolean wantToSeeFire() {
+        return this.canSeeFire;
+    }
+    public void setToSeeFire(boolean wantToSeeFire) {
+        this.canSeeFire = wantToSeeFire;
     }
 
     public void setArcherActive(boolean archerActive) {

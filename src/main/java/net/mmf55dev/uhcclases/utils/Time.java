@@ -12,6 +12,18 @@ public class Time {
         String remainTime = String.valueOf(finishTime - timeElapsed);
         return remainTime.substring(0, remainTime.length() - 3);
     }
+    public static int ticksToSeconds(int ticks) {
+        return ticks / 20;
+    }
+    public static int secondsToTicks(int seconds) {
+        return seconds * 20;
+    }
+    public static int ticksToMinutes(int ticks) {
+        return ticks / 20 * 60;
+    }
+    public static int minutesToTicks(int minutes) {
+        return minutes * 20 * 60;
+    }
     public static boolean hasFinished(long timeElapsed, long finishedTime) {
         return finishedTime - timeElapsed <= 0;
     }

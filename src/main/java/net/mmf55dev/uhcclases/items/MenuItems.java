@@ -1,7 +1,10 @@
 package net.mmf55dev.uhcclases.items;
 
+import net.mmf55dev.uhcclases.player.PlayerData;
+import net.mmf55dev.uhcclases.player.PlayerStats;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -14,6 +17,8 @@ public class MenuItems {
         List<String> itemLore = new ArrayList<>();
         itemLore.add("");
         itemLore.add("---> Click para Seleccionar Clase <---");
+        itemLore.add("");
+        itemLore.add(ChatColor.DARK_GRAY + "Click Derecho para ver que hace esta clase");
         itemLore.add("");
         return itemLore;
     }
@@ -98,6 +103,23 @@ public class MenuItems {
         assert itemMeta != null;
         itemMeta.setDisplayName(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "Bruja");
         itemMeta.setLore(lore());
+        itemStack.setItemMeta(itemMeta);
+        return itemStack;
+    }
+    public static ItemStack FireItem(Player player) {
+        ItemStack itemStack = new ItemStack(Material.BLAZE_POWDER);
+        ItemMeta itemMeta = itemStack.getItemMeta();
+        assert itemMeta != null;
+        itemMeta.setDisplayName(ChatColor.GOLD + "Mostrar/Ocultar fuego del Blaze");
+        List<String> itemLore = new ArrayList<>();
+        itemLore.add("");
+        PlayerStats playerStats = PlayerData.get(player.getUniqueId());
+        if (playerStats.wantToSeeFire()) {
+            itemLore.add(ChatColor.GRAY + "Fuego Visible: " + ChatColor.GREEN + ChatColor.BOLD + "ON");
+        } else {
+            itemLore.add(ChatColor.GRAY + "Fuego Visible: " + ChatColor.RED + ChatColor.BOLD + "OFF");
+        }
+        itemMeta.setLore(itemLore);
         itemStack.setItemMeta(itemMeta);
         return itemStack;
     }
