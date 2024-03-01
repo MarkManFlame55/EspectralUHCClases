@@ -1,7 +1,7 @@
-name: UHCClases
+name: EspectralUHC_Clases
 version: '${project.version}'
 main: net.mmf55dev.uhcclases.EspectralClassUHC
 api-version: '1.20'
 commands:
   class:
-    description: "a"
+    description: "Main Commands from Espectral UHC Clases Scenario"

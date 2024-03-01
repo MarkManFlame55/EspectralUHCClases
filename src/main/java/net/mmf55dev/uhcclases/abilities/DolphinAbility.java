@@ -43,9 +43,15 @@ public class DolphinAbility implements Listener {
     public static void onPortalEnter(PlayerPortalEvent e) {
         Player player = e.getPlayer();
         World world = e.getTo().getWorld();
-        if (world != null && world.getEnvironment().equals(World.Environment.NETHER)) {
-            player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, PotionEffect.INFINITE_DURATION, 1, false, false, false));
-            player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, PotionEffect.INFINITE_DURATION, 1, false, false, false));
+        PlayerStats playerStats = PlayerData.get(player.getUniqueId());
+        if (playerStats.getUhcClass().equals(UhcClass.DOLPHIN) && playerStats.isActive()) {
+            if (world != null && world.getEnvironment().equals(World.Environment.NETHER)) {
+                player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, PotionEffect.INFINITE_DURATION, 1, false, false, false));
+                player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, PotionEffect.INFINITE_DURATION, 1, false, false, false));
+            } else if (world != null && world.getEnvironment().equals(World.Environment.NORMAL)) {
+                player.removePotionEffect(PotionEffectType.WEAKNESS);
+                player.removePotionEffect(PotionEffectType.SLOW);
+            }
         }
     }
     public static void init(Player player) {

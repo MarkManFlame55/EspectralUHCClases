@@ -121,7 +121,7 @@ public class SonicBoomItem implements Listener {
                 particleLoc.add(vecOffset);
                 world.spawnParticle(Particle.SONIC_BOOM, particleLoc, 0);
             }
-        }.runTaskTimerAsynchronously(EspectralClassUHC.getPlugin(EspectralClassUHC.class), 0, 1);
+        }.runTaskTimer(EspectralClassUHC.getPlugin(EspectralClassUHC.class), 0, 1);
 
     }
 

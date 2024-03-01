@@ -8,6 +8,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 public class ClassManager {
 
@@ -65,6 +67,9 @@ public class ClassManager {
             }
             PlayerData.get(serverPlayers.getUniqueId()).setActive(false);
             PlayerData.get(serverPlayers.getUniqueId()).setUhcClass(null);
+            for (PotionEffect effect : serverPlayers.getActivePotionEffects()) {
+                serverPlayers.removePotionEffect(effect.getType());
+            }
         }
         ServerMessage.multicastToOp(ChatColor.GREEN + "Clases Reiniciadas");
     }

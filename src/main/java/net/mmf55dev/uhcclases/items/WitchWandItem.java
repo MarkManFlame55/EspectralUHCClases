@@ -22,7 +22,9 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 public class WitchWandItem implements Listener {
@@ -112,6 +114,11 @@ public class WitchWandItem implements Listener {
         ItemMeta itemMeta = itemStack.getItemMeta();
         itemMeta.setDisplayName(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "Varita de Bruja");
         itemMeta.setLocalizedName("witch_wand");
+
+        List<String> itemLore = new ArrayList<>();
+        itemLore.add("");
+        itemLore.add(ChatColor.DARK_GRAY + "Click Izquierdo para cambiar de modo");
+
         itemStack.setItemMeta(itemMeta);
         return itemStack;
     }

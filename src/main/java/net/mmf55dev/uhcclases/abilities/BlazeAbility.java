@@ -25,7 +25,6 @@ public class BlazeAbility implements Listener {
         Player player = e.getPlayer();
         ItemStack itemStack = e.getItem();
         PlayerStats playerStats = PlayerData.get(player.getUniqueId());
-        player.sendMessage(itemStack.getType().toString());
         if (playerStats.getUhcClass() != null) {
             if (itemStack.getType().equals(Material.MILK_BUCKET) && playerStats.getUhcClass().equals(UhcClass.BLAZE)) {
                 new DelayedTask(() -> {

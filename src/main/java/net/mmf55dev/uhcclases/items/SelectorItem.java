@@ -1,6 +1,9 @@
 package net.mmf55dev.uhcclases.items;
 
+import net.mmf55dev.uhcclases.classes.ClassManager;
 import net.mmf55dev.uhcclases.menu.ClassSelectorInventory;
+import net.mmf55dev.uhcclases.player.PlayerData;
+import net.mmf55dev.uhcclases.player.PlayerStats;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -25,10 +28,13 @@ public class SelectorItem implements Listener {
     public static void onRightClick(PlayerInteractEvent e) {
         if (e.getAction().equals(Action.RIGHT_CLICK_BLOCK) || e.getAction().equals(Action.RIGHT_CLICK_AIR)) {
             ItemStack itemStack = e.getItem();
+            Player player = e.getPlayer();
+            PlayerStats playerStats = PlayerData.get(player.getUniqueId());
             if (itemStack != null && itemStack.isSimilar(give())) {
-                Player player = e.getPlayer();
-                player.openInventory(ClassSelectorInventory.open(player));
-                player.playSound(player, Sound.BLOCK_TRIAL_SPAWNER_OPEN_SHUTTER, 1.0f, 0.5f);
+                if (!playerStats.isActive()) {
+                    player.openInventory(ClassSelectorInventory.open(player));
+                    player.playSound(player, Sound.BLOCK_TRIAL_SPAWNER_OPEN_SHUTTER, 1.0f, 0.5f);
+                }
             }
         }
     }

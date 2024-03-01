@@ -16,6 +16,7 @@ net\mmf55dev\uhcclases\items\SelectorItem.class
 net\mmf55dev\uhcclases\abilities\BlazeAbility$1.class
 net\mmf55dev\uhcclases\items\WitchWandItem.class
 net\mmf55dev\uhcclases\items\SonicBoomItem$1.class
+net\mmf55dev\uhcclases\abilities\HurtSounds.class
 net\mmf55dev\uhcclases\items\SonicBoomItem.class
 net\mmf55dev\uhcclases\utils\MobUtils.class
 net\mmf55dev\uhcclases\EspectralClassUHC.class
