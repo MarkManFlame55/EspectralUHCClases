@@ -142,6 +142,19 @@ public class uhcclassCommand implements CommandExecutor, TabCompleter {
                         for (String i : getStrings()) {
                             player.sendMessage(i);
                         }
+                        break;
+                    case "get":
+                        if (strings.length == 2 && server.getPlayer(strings[1]) != null) {
+                            Player target = server.getPlayer(strings[1]);
+                            PlayerStats playerStats = PlayerData.get(target.getUniqueId());
+                            if (playerStats.getUhcClass() != null) {
+                                ServerMessage.unicastTo(player, "Clase de: " + target.getDisplayName() + ": " + ChatColor.GREEN + playerStats.getUhcClass());
+                                player.playSound(player, Sound.BLOCK_NOTE_BLOCK_BIT, 1f, 1.5f);
+                            } else {
+                                ServerMessage.unicastTo(player, ChatColor.RED + target.getDisplayName() + " no tiene ninguna clase");
+                                player.playSound(player, Sound.BLOCK_NOTE_BLOCK_BIT, 1f, 1.5f);
+                            }
+                        }
                 }
             }
         } else {
