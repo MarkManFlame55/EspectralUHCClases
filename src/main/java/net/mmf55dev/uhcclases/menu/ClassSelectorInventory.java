@@ -16,6 +16,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,6 +68,16 @@ public class ClassSelectorInventory implements Listener {
                             inventory.setItem(e.getSlot(), MenuItems.FireItem(player));
                             player.playSound(player, Sound.ENTITY_BLAZE_HURT, 1.0f, 1.0f);
                         }
+                    } else if (itemStack.equals(MenuItems.CooldownItem(player))) {
+                        if (playerStats.wantToSeeCooldown()) {
+                            playerStats.setSeeCooldown(false);
+                            inventory.setItem(e.getSlot(), MenuItems.CooldownItem(player));
+                            player.playSound(player, Sound.ITEM_LODESTONE_COMPASS_LOCK, 1.0f, 1.0f);
+                        } else {
+                            playerStats.setSeeCooldown(true);
+                            inventory.setItem(e.getSlot(), MenuItems.CooldownItem(player));
+                            player.playSound(player, Sound.ITEM_LODESTONE_COMPASS_LOCK, 1.0f, 1.0f);
+                        }
                     } else {
                         player.closeInventory();
                         player.playSound(player, Sound.ENTITY_PLAYER_LEVELUP, 1.0f, 1.0f);
@@ -86,7 +97,7 @@ public class ClassSelectorInventory implements Listener {
                         msg.add("");
                         msg.add("Para hacerlo, los asesinos tienen que " + ChatColor.YELLOW + ChatColor.BOLD + "SHIFTEAR Y SALTAR");
                         msg.add("");
-                        msg.add("Se volveran invisibles dentro de una nube, esta invisibilidad dura 30 segundos.");
+                        msg.add("Se volverán invisibles dentro de una nube, esta invisibilidad dura 30 segundos. Mientras esteis invisibles recibireis Velocidad 2");
                         msg.add("");
                         msg.add("Cuando se acaban estos 3 segundos, el jugador vuelve a ser visible tras una explosion(no hace daño), y recibe 5 segundos de Glowing ");
                         msg.add("");
@@ -149,7 +160,7 @@ public class ClassSelectorInventory implements Listener {
                         msg.add("");
                         msg.add("Los Arqueros empezais la partida con un Arco con Infinidad, pero durante toda la partida teneis " + ChatColor.GRAY + "DEBILIDAD 1" + ChatColor.RESET + " que os reduce el daño cuerpo a cuerpo");
                         msg.add("");
-                        msg.add("El Arco que recibis tiene una habilidad con la que si pegais con ese arco en la mano, os quedais paralizados donde esteis, pero vuestras flechas harán " + ChatColor.GOLD + ChatColor.BOLD + "x2" + ChatColor.RESET + " de daño");
+                        msg.add("El Arco que recibis tiene una habilidad con la que si pegais con ese arco en la mano, os quedais paralizados donde esteis, pero vuestras flechas harán " + ChatColor.GOLD + ChatColor.BOLD + "x2" + ChatColor.RESET + " de daño a los jugadores, mieentras que a los mobs les hara 50 puntos de daño");
                         msg.add("");
                         msg.add("El arco tiene " + ChatColor.RED + "1 minuto" + ChatColor.RESET + " de cooldown;");
                         msg.add("");
@@ -163,6 +174,8 @@ public class ClassSelectorInventory implements Listener {
                         msg.add("Recibiras un item de Vagoneta con TNT, al que si haces click derecho, te inmolaras con el poder de " + ChatColor.LIGHT_PURPLE + ChatColor.BOLD + "2 CRISTALES DEL END");
                         msg.add("");
                         msg.add("Esta explosion te matara a ti tambien e incluso a tus compañeros. " + ChatColor.RED + "Cuidado con cuando la activas.");
+                        msg.add("");
+                        msg.add("Esta explosion no será instantanea segun la activas, sino que tiene un retardo de 2 segundos, en el que los jugadores cercanos podran verte activar la habilidad");
                         msg.add("");
                         for (String i : msg) {
                             player.sendMessage(i);
@@ -182,6 +195,10 @@ public class ClassSelectorInventory implements Listener {
                         }
                     }
                 }
+            } else {
+                if (itemStack != null) {
+                    e.setCancelled(true);
+                }
             }
         }
     }
@@ -198,6 +215,7 @@ public class ClassSelectorInventory implements Listener {
         menu.setItem(30, MenuItems.ArcherItem(player));
         menu.setItem(32, MenuItems.SleepyItem(player));
         menu.setItem(34, MenuItems.WitchItem(player));
+        menu.setItem(52, MenuItems.CooldownItem(player));
         menu.setItem(53, MenuItems.FireItem(player));
 
         return menu;

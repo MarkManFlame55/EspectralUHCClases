@@ -166,4 +166,21 @@ public class MenuItems {
         itemStack.setItemMeta(itemMeta);
         return itemStack;
     }
+    public static ItemStack CooldownItem(Player player) {
+        ItemStack itemStack = new ItemStack(Material.CLOCK);
+        ItemMeta itemMeta = itemStack.getItemMeta();
+        assert itemMeta != null;
+        itemMeta.setDisplayName(ChatColor.YELLOW + "Mostrar/Ocultar mensaje de Cooldown");
+        List<String> itemLore = new ArrayList<>();
+        itemLore.add("");
+        PlayerStats playerStats = PlayerData.get(player.getUniqueId());
+        if (playerStats.wantToSeeCooldown()) {
+            itemLore.add(ChatColor.GRAY + "Mensaje de Cooldown: " + ChatColor.GREEN + ChatColor.BOLD + "ON");
+        } else {
+            itemLore.add(ChatColor.GRAY + "Mensaje de Cooldown: " + ChatColor.RED + ChatColor.BOLD + "OFF");
+        }
+        itemMeta.setLore(itemLore);
+        itemStack.setItemMeta(itemMeta);
+        return itemStack;
+    }
 }

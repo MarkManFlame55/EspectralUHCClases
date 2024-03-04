@@ -7,7 +7,8 @@ public class PlayerStats {
     private UhcClass uhcClass;
     private boolean classActive;
     private boolean archerActive;
-    private boolean canSeeFire;
+    private boolean canSeeFire = true;
+    private boolean canSeeCooldown = true;
 
     public UhcClass getUhcClass() {
         return uhcClass;
@@ -36,6 +37,12 @@ public class PlayerStats {
     }
     public boolean isArcherActive() {
         return this.archerActive;
+    }
+    public void setSeeCooldown(boolean canSeeCooldown) {
+        this.canSeeCooldown = canSeeCooldown;
+    }
+    public boolean wantToSeeCooldown() {
+        return this.canSeeCooldown;
     }
 
 

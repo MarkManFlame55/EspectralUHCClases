@@ -5,9 +5,8 @@ import net.mmf55dev.uhcclases.classes.UhcClass;
 import net.mmf55dev.uhcclases.player.PlayerData;
 import net.mmf55dev.uhcclases.player.PlayerStats;
 import net.mmf55dev.uhcclases.utils.DelayedTask;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
+import net.mmf55dev.uhcclases.utils.ServerMessage;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -57,5 +56,7 @@ public class DolphinAbility implements Listener {
     public static void init(Player player) {
         player.addPotionEffect(new PotionEffect(PotionEffectType.DOLPHINS_GRACE, PotionEffect.INFINITE_DURATION, 0, false, false, false));
         player.addPotionEffect(new PotionEffect(PotionEffectType.CONDUIT_POWER, PotionEffect.INFINITE_DURATION, 0, false, false, false));
+        ServerMessage.unicastTo(player, ChatColor.GREEN + "Has recibido tu habilidad");
+        player.playSound(player, Sound.BLOCK_NOTE_BLOCK_BIT, 1f, 1.5f);
     }
 }

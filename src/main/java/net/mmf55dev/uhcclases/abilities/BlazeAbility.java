@@ -5,10 +5,10 @@ import net.mmf55dev.uhcclases.classes.UhcClass;
 import net.mmf55dev.uhcclases.player.PlayerData;
 import net.mmf55dev.uhcclases.player.PlayerStats;
 import net.mmf55dev.uhcclases.utils.DelayedTask;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Server;
+import net.mmf55dev.uhcclases.utils.ServerMessage;
+import org.bukkit.*;
+import org.bukkit.damage.DamageSource;
+import org.bukkit.damage.DamageType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -39,6 +39,8 @@ public class BlazeAbility implements Listener {
         if (PlayerData.get(player.getUniqueId()).wantToSeeFire()) {
             player.setVisualFire(true);
         }
+        ServerMessage.unicastTo(player, ChatColor.GREEN + "Has recibido tu habilidad");
+        player.playSound(player, Sound.BLOCK_NOTE_BLOCK_BIT, 1.0f, 1.5f);
     }
     public static void checkForPlayersInWater() {
         Server server = Bukkit.getServer();

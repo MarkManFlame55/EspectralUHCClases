@@ -56,7 +56,9 @@ public class SonicBoomItem implements Listener {
                                     player.playSound(player, Sound.ENTITY_WARDEN_SONIC_BOOM, 1.0f, 0.9f);
                                     //AbilityUtils.notifyWhenFinish(player, cooldown, Time.seconds(30), item);
                                 } else {
-                                    ServerMessage.unicastTo(player, item.getItemMeta().getDisplayName() + ChatColor.RED + " sigue en cooldown!" + ChatColor.GRAY + " (" + Time.getRemainTime(timeElapsed, Time.seconds(30)) + "s)");
+                                    if (playerData.wantToSeeCooldown()) {
+                                        ServerMessage.unicastTo(player, item.getItemMeta().getDisplayName() + ChatColor.RED + " sigue en cooldown!" + ChatColor.GRAY + " (" + Time.getRemainTime(timeElapsed, Time.seconds(30)) + "s)");
+                                    }
                                 }
                             }
                         } else {
@@ -131,7 +133,7 @@ public class SonicBoomItem implements Listener {
         ItemMeta itemMeta = itemStack.getItemMeta();
         assert itemMeta != null;
         itemMeta.setDisplayName(ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "Sonic Crystal");
-        itemMeta.setLocalizedName("sonic_crystal");
+        itemMeta.setLocalizedName("class_item");
         itemMeta.addEnchant(Enchantment.DURABILITY, 1, false);
         itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 

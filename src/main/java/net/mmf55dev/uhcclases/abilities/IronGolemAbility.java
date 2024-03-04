@@ -5,7 +5,10 @@ import net.mmf55dev.uhcclases.classes.UhcClass;
 import net.mmf55dev.uhcclases.player.PlayerData;
 import net.mmf55dev.uhcclases.player.PlayerStats;
 import net.mmf55dev.uhcclases.utils.DelayedTask;
+import net.mmf55dev.uhcclases.utils.ServerMessage;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -36,5 +39,7 @@ public class IronGolemAbility implements Listener {
     public static void init(Player player) {
         player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, PotionEffect.INFINITE_DURATION, 1, false, false, false));
         player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, PotionEffect.INFINITE_DURATION, 1, false, false, false));
+        ServerMessage.unicastTo(player, ChatColor.GREEN + "Has recibido tu habilidad");
+        player.playSound(player, Sound.BLOCK_NOTE_BLOCK_BIT, 1f, 1.5f);
     }
 }

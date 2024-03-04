@@ -4,6 +4,7 @@ import net.mmf55dev.uhcclases.classes.ClassManager;
 import net.mmf55dev.uhcclases.menu.ClassSelectorInventory;
 import net.mmf55dev.uhcclases.player.PlayerData;
 import net.mmf55dev.uhcclases.player.PlayerStats;
+import net.mmf55dev.uhcclases.utils.ServerMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -34,6 +35,8 @@ public class SelectorItem implements Listener {
                 if (!playerStats.isActive()) {
                     player.openInventory(ClassSelectorInventory.open(player));
                     player.playSound(player, Sound.BLOCK_TRIAL_SPAWNER_OPEN_SHUTTER, 1.0f, 0.5f);
+                } else {
+                    ServerMessage.unicastTo(player, ChatColor.RED + "Ya no puedes cambiarte de clase. Se requiere de un reinicio de partida o un cambio manual por parte del host");
                 }
             }
         }

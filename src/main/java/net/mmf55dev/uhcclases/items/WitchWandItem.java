@@ -46,15 +46,15 @@ public class WitchWandItem implements Listener {
                     if (!this.cooldown.containsKey(player.getUniqueId())) {
                         this.cooldown.put(player.getUniqueId(), System.currentTimeMillis());
                         performAbility(player);
-                        //AbilityUtils.notifyWhenFinish(player, cooldown, Time.minutes(1), itemStack);
                     } else {
                         long timeElapsed = System.currentTimeMillis() - cooldown.get(player.getUniqueId());
                         if (timeElapsed >= Time.minutes(1)) {
                             this.cooldown.put(player.getUniqueId(), System.currentTimeMillis());
                             performAbility(player);
-                            //AbilityUtils.notifyWhenFinish(player, cooldown, Time.minutes(1), itemStack);
                         } else {
-                            ServerMessage.unicastTo(player, itemStack.getItemMeta().getDisplayName() + ChatColor.RED + " sigue en cooldown!" + ChatColor.GRAY + " (" + Time.getRemainTime(timeElapsed, Time.minutes(1)) + "s)");
+                            if (playerStats.wantToSeeCooldown()) {
+                                ServerMessage.unicastTo(player, itemStack.getItemMeta().getDisplayName() + ChatColor.RED + " sigue en cooldown!" + ChatColor.GRAY + " (" + Time.getRemainTime(timeElapsed, Time.minutes(1)) + "s)");
+                            }
                         }
                     }
                 } else {
@@ -113,12 +113,14 @@ public class WitchWandItem implements Listener {
         ItemStack itemStack = new ItemStack(Material.STICK);
         ItemMeta itemMeta = itemStack.getItemMeta();
         itemMeta.setDisplayName(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "Varita de Bruja");
-        itemMeta.setLocalizedName("witch_wand");
+        itemMeta.setLocalizedName("class_item");
 
         List<String> itemLore = new ArrayList<>();
         itemLore.add("");
         itemLore.add(ChatColor.DARK_GRAY + "Click Izquierdo para cambiar de modo");
+        itemLore.add("");
 
+        itemMeta.setLore(itemLore);
         itemStack.setItemMeta(itemMeta);
         return itemStack;
     }

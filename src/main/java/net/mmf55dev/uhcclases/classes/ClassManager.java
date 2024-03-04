@@ -11,6 +11,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.Random;
+
 public class ClassManager {
 
     private static boolean hasStarted;
@@ -24,30 +26,13 @@ public class ClassManager {
                 PlayerStats playerStats = PlayerData.get(player.getUniqueId());
                 if (playerClass != null) {
                     playerStats.setActive(true);
-                    if (playerClass.equals(UhcClass.ASSASSIN)) {
-                        //Nada que activar con los asesinos
-                    }
-                    if (playerClass.equals(UhcClass.WARDEN)) {
-                        WardenAbility.init(player);
-                    }
-                    if (playerClass.equals(UhcClass.BLAZE)) {
-                        BlazeAbility.init(player);
-                    }
-                    if (playerClass.equals(UhcClass.IRON_GOLEM)) {
-                        IronGolemAbility.init(player);
-                    }
-                    if (playerClass.equals(UhcClass.DOLPHIN)) {
-                        DolphinAbility.init(player);
-                    }
-                    if (playerClass.equals(UhcClass.SLEEPY)) {
-                        SleepyAbiility.init(player);
-                    }
-                    if (playerClass.equals(UhcClass.ARCHER)) {
-                        ArcherAbility.init(player);
-                    }
-                    if (playerClass.equals(UhcClass.WITCH)) {
-                        WitchAbility.init(player);
-                    }
+                    initEachClass(player, playerClass);
+                } else {
+                    ServerMessage.unicastTo(player, ChatColor.GRAY + "No has elegido una clase durante el tiempo establecido. Se te asignó una aleatoria.");
+                    playerStats.setUhcClass(getRandomEnumValue(UhcClass.class));
+                    playerClass = playerStats.getUhcClass();
+                    playerStats.setActive(true);
+                    initEachClass(player, playerClass);
                 }
             }
             BlazeAbility.checkForPlayersInWater();
@@ -73,5 +58,35 @@ public class ClassManager {
         }
         ServerMessage.multicastToOp(ChatColor.GREEN + "Clases Reiniciadas");
     }
-
+    public static <T extends Enum<?>> T getRandomEnumValue(Class<T> enumClass) {
+        Random random = new Random();
+        int randomIndex = random.nextInt(enumClass.getEnumConstants().length);
+        return enumClass.getEnumConstants()[randomIndex];
+    }
+    private static void initEachClass(Player player, UhcClass playerClass) {
+        if (playerClass.equals(UhcClass.ASSASSIN)) {
+            //Nada que activar con los asesinos
+        }
+        if (playerClass.equals(UhcClass.WARDEN)) {
+            WardenAbility.init(player);
+        }
+        if (playerClass.equals(UhcClass.BLAZE)) {
+            BlazeAbility.init(player);
+        }
+        if (playerClass.equals(UhcClass.IRON_GOLEM)) {
+            IronGolemAbility.init(player);
+        }
+        if (playerClass.equals(UhcClass.DOLPHIN)) {
+            DolphinAbility.init(player);
+        }
+        if (playerClass.equals(UhcClass.SLEEPY)) {
+            SleepyAbiility.init(player);
+        }
+        if (playerClass.equals(UhcClass.ARCHER)) {
+            ArcherAbility.init(player);
+        }
+        if (playerClass.equals(UhcClass.WITCH)) {
+            WitchAbility.init(player);
+        }
+    }
 }

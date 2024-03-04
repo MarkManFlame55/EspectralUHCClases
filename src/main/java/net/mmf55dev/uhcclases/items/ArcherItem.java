@@ -10,6 +10,7 @@ import net.mmf55dev.uhcclases.utils.Time;
 import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Arrow;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -17,12 +18,15 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerItemDamageEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -52,7 +56,9 @@ public class ArcherItem implements Listener {
                             performAbiility(player, playerStats);
 
                         } else {
-                            ServerMessage.unicastTo(player, itemStack.getItemMeta().getDisplayName() + ChatColor.RED + " sigue en cooldown!" + ChatColor.GRAY + " (" + Time.getRemainTime(timeElapsed, Time.minutes(1)) + "s)");
+                            if (playerStats.wantToSeeCooldown()) {
+                                ServerMessage.unicastTo(player, itemStack.getItemMeta().getDisplayName() + ChatColor.RED + " sigue en cooldown!" + ChatColor.GRAY + " (" + Time.getRemainTime(timeElapsed, Time.minutes(1)) + "s)");
+                            }
                         }
                     }
                 } else {
@@ -68,11 +74,29 @@ public class ArcherItem implements Listener {
                  if (arrow.getShooter() instanceof Player player) {
                      PlayerStats playerStats = PlayerData.get(player.getUniqueId());
                      if (playerStats.isArcherActive()) {
-                         e.setDamage(e.getDamage()*2);
+                         if (e.getEntity() instanceof Player target) {
+                             e.setDamage(e.getDamage()*2.5);
+                             target.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, Time.secondsToTicks(5), 0));
+                         } else {
+                             if (e.getEntity() instanceof LivingEntity) {
+                                 e.setDamage(50);
+                             }
+                         }
                      }
                  }
              }
          }
+    }
+    @EventHandler
+    public static void onBowDamage(PlayerItemDamageEvent e) {
+        ItemStack itemStack = e.getItem();
+        Player player = e.getPlayer();
+        PlayerStats playerStats = PlayerData.get(player.getUniqueId());
+        if (itemStack.getItemMeta() != null && itemStack.getItemMeta().hasLocalizedName()) {
+            if (itemStack.getItemMeta().getLocalizedName().equalsIgnoreCase("archer_weapon") && playerStats.isArcherActive()) {
+                e.setDamage(e.getDamage()*2);
+            }
+        }
     }
     public static ItemStack giveItem() {
         ItemStack itemStack = new ItemStack(Material.BOW);
@@ -91,15 +115,14 @@ public class ArcherItem implements Listener {
     }
     private void performAbiility(Player player, PlayerStats playerStats) {
         World world = player.getWorld();
-
+        world.playSound(player.getLocation(), Sound.ENTITY_WITHER_AMBIENT, 1.0f, 1.0f);
         new BukkitRunnable() {
             int seconds = 0;
             @Override
             public void run() {
                 if (seconds <= 5) {
-                    player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 21, 250, false, false, false));
-                    player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 21, 127, false, false, false));
-                    world.playSound(player.getLocation(), Sound.ENTITY_WITHER_AMBIENT, 1.0f, 1.0f);
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 21, 255, false, false, false));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 21, 128, false, false, false));
                     world.spawnParticle(Particle.CRIT, player.getLocation(), 5, 1, 1, 1);
                     playerStats.setArcherActive(true);
                     seconds++;

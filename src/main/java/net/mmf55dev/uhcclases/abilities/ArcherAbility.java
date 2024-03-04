@@ -6,7 +6,10 @@ import net.mmf55dev.uhcclases.items.ArcherItem;
 import net.mmf55dev.uhcclases.player.PlayerData;
 import net.mmf55dev.uhcclases.player.PlayerStats;
 import net.mmf55dev.uhcclases.utils.DelayedTask;
+import net.mmf55dev.uhcclases.utils.ServerMessage;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -34,8 +37,10 @@ public class ArcherAbility implements Listener {
 
 
     public static void init(Player player) {
-        player.getInventory().addItem(ArcherItem.giveItem());
+        player.getInventory().addItem(ArcherItem.giveItem(), new ItemStack(Material.ARROW));
         player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, PotionEffect.INFINITE_DURATION, 0, false, false, false));
+        ServerMessage.unicastTo(player, ChatColor.GREEN + "Has recibido tu habilidad");
+        player.playSound(player, Sound.BLOCK_NOTE_BLOCK_BIT, 1f, 1.5f);
     }
 
 }

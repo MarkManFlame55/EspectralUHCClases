@@ -7,7 +7,6 @@ public class Time {
     public static long seconds(long seconds) {
         return seconds * 1000;
     }
-
     public static String getRemainTime(long timeElapsed, long finishTime) {
         String remainTime = String.valueOf(finishTime - timeElapsed);
         return remainTime.substring(0, remainTime.length() - 3);
