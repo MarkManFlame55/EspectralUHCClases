@@ -4,7 +4,6 @@ import net.mmf55dev.uhcclases.EspectralClassUHC;
 import net.mmf55dev.uhcclases.classes.UhcClass;
 import net.mmf55dev.uhcclases.player.PlayerData;
 import net.mmf55dev.uhcclases.player.PlayerStats;
-import net.mmf55dev.uhcclases.utils.AbilityUtils;
 import net.mmf55dev.uhcclases.utils.ServerMessage;
 import net.mmf55dev.uhcclases.utils.Time;
 import org.bukkit.*;
@@ -20,9 +19,11 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -30,34 +31,33 @@ import java.util.UUID;
 
 public class SonicBoomItem implements Listener {
 
-    private final HashMap<UUID, Long> cooldown;
-    public SonicBoomItem() {this.cooldown = new HashMap<>();}
-    //.
+    private final HashMap<UUID, Long> cooldownR;
+    public SonicBoomItem() {
+        this.cooldownR = new HashMap<>();
+    }
     @EventHandler
-    public void onRightClick(PlayerInteractEvent e) {
+    public void onPlayerClick(PlayerInteractEvent e) {
         Player player = e.getPlayer();
-        ItemStack item = e.getItem();
+        ItemStack itemStack = e.getItem();
         PlayerStats playerData = PlayerData.get(player.getUniqueId());
         if (e.getAction().equals(Action.RIGHT_CLICK_AIR) || e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
-            if (item != null) {
-                if (item.equals(SonicBoomItem.giveItem())) {
+            if (itemStack != null) {
+                if (itemStack.equals(SonicBoomItem.giveItem())) {
                     if (playerData.isActive()) {
                         if (playerData.getUhcClass().equals(UhcClass.WARDEN)) {
-                            if (!this.cooldown.containsKey(player.getUniqueId())) {
-                                this.cooldown.put(player.getUniqueId(), System.currentTimeMillis());
+                            if (!this.cooldownR.containsKey(player.getUniqueId())) {
+                                this.cooldownR.put(player.getUniqueId(), System.currentTimeMillis());
                                 particleBeam(player);
                                 player.playSound(player, Sound.ENTITY_WARDEN_SONIC_BOOM, 1.0f, 0.9f);
-                                //AbilityUtils.notifyWhenFinish(player, cooldown, Time.seconds(30), item);
                             } else {
-                                long timeElapsed = System.currentTimeMillis() - cooldown.get(player.getUniqueId());
+                                long timeElapsed = System.currentTimeMillis() - cooldownR.get(player.getUniqueId());
                                 if (timeElapsed >= Time.seconds(30)) {
-                                    this.cooldown.put(player.getUniqueId(), System.currentTimeMillis());
+                                    this.cooldownR.put(player.getUniqueId(), System.currentTimeMillis());
                                     particleBeam(player);
                                     player.playSound(player, Sound.ENTITY_WARDEN_SONIC_BOOM, 1.0f, 0.9f);
-                                    //AbilityUtils.notifyWhenFinish(player, cooldown, Time.seconds(30), item);
                                 } else {
                                     if (playerData.wantToSeeCooldown()) {
-                                        ServerMessage.unicastTo(player, item.getItemMeta().getDisplayName() + ChatColor.RED + " sigue en cooldown!" + ChatColor.GRAY + " (" + Time.getRemainTime(timeElapsed, Time.seconds(30)) + "s)");
+                                        ServerMessage.unicastTo(player, ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "SONIC BOOM" + ChatColor.RED + " sigue en cooldown!" + ChatColor.GRAY + " (" + Time.getRemainTime(timeElapsed, Time.seconds(30)) + "s)");
                                     }
                                 }
                             }
@@ -127,7 +127,6 @@ public class SonicBoomItem implements Listener {
 
     }
 
-
     public static ItemStack giveItem() {
         ItemStack itemStack = new ItemStack(Material.ECHO_SHARD);
         ItemMeta itemMeta = itemStack.getItemMeta();
@@ -145,9 +144,5 @@ public class SonicBoomItem implements Listener {
         itemMeta.setLore(itemLore);
         itemStack.setItemMeta(itemMeta);
         return itemStack;
-    }
-
-    public static void give(Player player) {
-        player.getInventory().addItem(giveItem());
     }
 }

@@ -1,15 +1,12 @@
 package net.mmf55dev.uhcclases.items;
 
-import net.mmf55dev.uhcclases.EspectralClassUHC;
 import net.mmf55dev.uhcclases.classes.UhcClass;
 import net.mmf55dev.uhcclases.player.PlayerData;
 import net.mmf55dev.uhcclases.player.PlayerStats;
-import net.mmf55dev.uhcclases.utils.AbilityUtils;
 import net.mmf55dev.uhcclases.utils.ServerMessage;
 import net.mmf55dev.uhcclases.utils.Time;
 import org.bukkit.*;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -20,7 +17,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.scheduler.BukkitRunnable;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -65,9 +62,6 @@ public class WitchWandItem implements Listener {
 
 
     }
-
-
-
     @EventHandler
     public static void onLeftClick(PlayerInteractEvent e) {
         if (e.getAction().equals(Action.LEFT_CLICK_BLOCK) || e.getAction().equals(Action.LEFT_CLICK_AIR)) {

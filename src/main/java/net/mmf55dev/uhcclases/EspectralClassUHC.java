@@ -5,7 +5,6 @@ import net.mmf55dev.uhcclases.commands.uhcclassCommand;
 import net.mmf55dev.uhcclases.items.*;
 import net.mmf55dev.uhcclases.menu.ClassSelectorInventory;
 import net.mmf55dev.uhcclases.utils.PlayerJumpEvent;
-import org.bukkit.entity.Warden;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class EspectralClassUHC extends JavaPlugin {

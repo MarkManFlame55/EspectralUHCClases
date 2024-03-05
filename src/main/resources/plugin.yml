@@ -2,6 +2,7 @@ name: EspectralUHC_Clases
 version: '${project.version}'
 main: net.mmf55dev.uhcclases.EspectralClassUHC
 api-version: '1.20'
+depend: [ProtocolLib]
 commands:
   class:
     description: "Main Commands from Espectral UHC Clases Scenario"
