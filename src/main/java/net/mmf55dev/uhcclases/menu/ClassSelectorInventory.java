@@ -110,7 +110,7 @@ public class ClassSelectorInventory implements Listener {
                     if (itemStack.equals(MenuItems.BlazeItem(player))) {
                         msg.add(itemStack.getItemMeta().getDisplayName());
                         msg.add("");
-                        msg.add("Los blazes constan de " + ChatColor.GOLD + ChatColor.BOLD + "RESISTENCIA CONTRA EL FUEGO" + ChatColor.RESET + " infinita");
+                        msg.add("Los blazes constan de " + ChatColor.GOLD + ChatColor.BOLD + "RESISTENCIA CONTRA EL FUEGO" + ChatColor.RESET + " infinita. Teneis una habilidad que se activa con " + ChatColor.RED + ChatColor.BOLD + "SHIFT + SALTO" + ChatColor.RESET + " que hace que durante 10 segundos, todos vuestros hits queman al enemigo durante 4 segundos.");
                         msg.add("");
                         msg.add("Los Blazes os vereis en fuego constantemente. Se recomienda algún resource pack que baje el fuego, o deshabilitar esta opcion en el menu de seleccion de clases");
                         msg.add("");

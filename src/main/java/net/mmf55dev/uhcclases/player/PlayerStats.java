@@ -9,29 +9,26 @@ public class PlayerStats {
     private boolean archerActive;
     private boolean canSeeFire = true;
     private boolean canSeeCooldown = true;
+    private boolean blazeActive;
 
     public UhcClass getUhcClass() {
         return uhcClass;
     }
-
     public void setUhcClass(UhcClass uhcClass) {
         this.uhcClass = uhcClass;
     }
-
     public void setActive(boolean classActive) {
         this.classActive = classActive;
     }
     public boolean isActive() {
         return this.classActive;
     }
-
     public boolean wantToSeeFire() {
         return this.canSeeFire;
     }
     public void setToSeeFire(boolean wantToSeeFire) {
         this.canSeeFire = wantToSeeFire;
     }
-
     public void setArcherActive(boolean archerActive) {
         this.archerActive = archerActive;
     }
@@ -44,7 +41,12 @@ public class PlayerStats {
     public boolean wantToSeeCooldown() {
         return this.canSeeCooldown;
     }
-
+    public void setBlazeActive(boolean blazeActive) {
+        this.blazeActive = blazeActive;
+    }
+    public boolean isBlazeActive() {
+        return this.blazeActive;
+    }
 
 
 }

@@ -32,11 +32,12 @@ public class uhcclassCommand implements CommandExecutor, TabCompleter {
         options.add("give");
         options.add("remove");
         options.add("help");
+        options.add("get");
     }
 
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
-        if (commandSender instanceof Player player && player.isOp()) {
+        if (commandSender instanceof Player player) {
             if (strings.length == 0) {
                 ServerMessage.unicastTo(player, ChatColor.RED + "Comando Incompleto");
             } else {
