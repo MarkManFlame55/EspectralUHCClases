@@ -35,6 +35,7 @@ public class uhcclassCommand implements CommandExecutor, TabCompleter {
         options.add("remove");
         options.add("help");
         options.add("get");
+        options.add("list");
 
 
         deleteItems.add("class_item");
