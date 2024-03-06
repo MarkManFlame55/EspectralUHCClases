@@ -1,7 +1,0 @@
-name: EspectralUHC_Clases
-version: '1.6-SNAPSHOT'
-main: net.mmf55dev.uhcclases.EspectralClassUHC
-api-version: '1.20'
-commands:
-  class:
-    description: "Main Commands from Espectral UHC Clases Scenario"
