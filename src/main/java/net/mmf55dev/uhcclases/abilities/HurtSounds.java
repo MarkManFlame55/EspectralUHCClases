@@ -19,20 +19,22 @@ public class HurtSounds implements Listener {
             World world = player.getWorld();
             Location pos = player.getLocation();
             if (playerStats.isActive() && playerStats.getUhcClass() != null) {
-                if (playerStats.getUhcClass().equals(UhcClass.BLAZE)) {
-                    world.playSound(pos, Sound.ENTITY_BLAZE_HURT, 1.0f, 1.0f);
-                }
-                if (playerStats.getUhcClass().equals(UhcClass.WARDEN)) {
-                    world.playSound(pos, Sound.ENTITY_WARDEN_HURT, 1.0f, 1.0f);
-                }
-                if (playerStats.getUhcClass().equals(UhcClass.DOLPHIN)) {
-                    world.playSound(pos, Sound.ENTITY_DOLPHIN_HURT, 1.0f, 1.0f);
-                }
-                if (playerStats.getUhcClass().equals(UhcClass.WITCH)) {
-                    world.playSound(pos, Sound.ENTITY_WITCH_HURT, 1.0f, 1.0f);
-                }
-                if (playerStats.getUhcClass().equals(UhcClass.IRON_GOLEM)) {
-                    world.playSound(pos, Sound.ENTITY_IRON_GOLEM_HURT, 1.0f, 1.0f);
+                if (!player.isBlocking()) {
+                    if (playerStats.getUhcClass().equals(UhcClass.BLAZE)) {
+                        world.playSound(pos, Sound.ENTITY_BLAZE_HURT, 1.0f, 1.0f);
+                    }
+                    if (playerStats.getUhcClass().equals(UhcClass.WARDEN)) {
+                        world.playSound(pos, Sound.ENTITY_WARDEN_HURT, 1.0f, 1.0f);
+                    }
+                    if (playerStats.getUhcClass().equals(UhcClass.DOLPHIN)) {
+                        world.playSound(pos, Sound.ENTITY_DOLPHIN_HURT, 1.0f, 1.0f);
+                    }
+                    if (playerStats.getUhcClass().equals(UhcClass.WITCH)) {
+                        world.playSound(pos, Sound.ENTITY_WITCH_HURT, 1.0f, 1.0f);
+                    }
+                    if (playerStats.getUhcClass().equals(UhcClass.IRON_GOLEM)) {
+                        world.playSound(pos, Sound.ENTITY_IRON_GOLEM_HURT, 1.0f, 1.0f);
+                    }
                 }
             }
         }

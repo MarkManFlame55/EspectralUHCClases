@@ -24,6 +24,8 @@ import java.util.List;
 
 public class uhcclassCommand implements CommandExecutor, TabCompleter {
 
+    List<String> deleteItems = new ArrayList<>();
+
     private final List<String> options = new ArrayList<>();
     public uhcclassCommand() {
         options.add("selector");
@@ -33,6 +35,11 @@ public class uhcclassCommand implements CommandExecutor, TabCompleter {
         options.add("remove");
         options.add("help");
         options.add("get");
+
+
+        deleteItems.add("class_item");
+        deleteItems.add("archer_weapon");
+        deleteItems.add("golem_weapon");
     }
 
     @Override
@@ -67,7 +74,7 @@ public class uhcclassCommand implements CommandExecutor, TabCompleter {
                             for (ItemStack itemStack : target.getInventory().getContents()) {
                                 if (itemStack != null) {
                                     if (itemStack.hasItemMeta() && itemStack.getItemMeta().hasLocalizedName()) {
-                                        if (itemStack.getItemMeta().getLocalizedName().equalsIgnoreCase("class_item") || itemStack.getItemMeta().getLocalizedName().equalsIgnoreCase("archer_weapon")) {
+                                        if (deleteItems.contains(itemStack.getItemMeta().getLocalizedName())) {
                                             itemStack.setAmount(0);
                                         }
                                     }
@@ -156,6 +163,103 @@ public class uhcclassCommand implements CommandExecutor, TabCompleter {
                                 player.playSound(player, Sound.BLOCK_NOTE_BLOCK_BIT, 1f, 1.5f);
                             }
                         }
+                        break;
+                    case "list":
+                        if (strings.length == 2) {
+                            int count = 0;
+                            boolean failed = false;
+                            switch (strings[1]) {
+                                case "ASSASSIN":
+                                    for (Player serverPlayers : server.getOnlinePlayers()) {
+                                        PlayerStats playerStats = PlayerData.get(player.getUniqueId());
+                                        if (playerStats.getUhcClass() != null && playerStats.getUhcClass().equals(UhcClass.ASSASSIN)) {
+                                            if (serverPlayers.getGameMode().equals(GameMode.SURVIVAL) || serverPlayers.getGameMode().equals(GameMode.ADVENTURE)) {
+                                                count++;
+                                            }
+                                        }
+                                    }
+                                    break;
+                                case "WARDEN":
+                                    for (Player serverPlayers : server.getOnlinePlayers()) {
+                                        PlayerStats playerStats = PlayerData.get(player.getUniqueId());
+                                        if (playerStats.getUhcClass() != null && playerStats.getUhcClass().equals(UhcClass.WARDEN)) {
+                                            if (serverPlayers.getGameMode().equals(GameMode.SURVIVAL) || serverPlayers.getGameMode().equals(GameMode.ADVENTURE)) {
+                                                count++;
+                                            }
+                                        }
+                                    }
+                                    break;
+                                case "ARCHER":
+                                    for (Player serverPlayers : server.getOnlinePlayers()) {
+                                        PlayerStats playerStats = PlayerData.get(player.getUniqueId());
+                                        if (playerStats.getUhcClass() != null && playerStats.getUhcClass().equals(UhcClass.ARCHER)) {
+                                            if (serverPlayers.getGameMode().equals(GameMode.SURVIVAL) || serverPlayers.getGameMode().equals(GameMode.ADVENTURE)) {
+                                                count++;
+                                            }
+                                        }
+                                    }
+                                    break;
+                                case "IRONGOLEM":
+                                    for (Player serverPlayers : server.getOnlinePlayers()) {
+                                        PlayerStats playerStats = PlayerData.get(player.getUniqueId());
+                                        if (playerStats.getUhcClass() != null && playerStats.getUhcClass().equals(UhcClass.IRON_GOLEM)) {
+                                            if (serverPlayers.getGameMode().equals(GameMode.SURVIVAL) || serverPlayers.getGameMode().equals(GameMode.ADVENTURE)) {
+                                                count++;
+                                            }
+                                        }
+                                    }
+                                    break;
+                                case "DOLPHIN":
+                                    for (Player serverPlayers : server.getOnlinePlayers()) {
+                                        PlayerStats playerStats = PlayerData.get(player.getUniqueId());
+                                        if (playerStats.getUhcClass() != null && playerStats.getUhcClass().equals(UhcClass.DOLPHIN)) {
+                                            if (serverPlayers.getGameMode().equals(GameMode.SURVIVAL) || serverPlayers.getGameMode().equals(GameMode.ADVENTURE)) {
+                                                count++;
+                                            }
+                                        }
+                                    }
+                                    break;
+                                case "SLEEPY":
+                                    for (Player serverPlayers : server.getOnlinePlayers()) {
+                                        PlayerStats playerStats = PlayerData.get(player.getUniqueId());
+                                        if (playerStats.getUhcClass() != null && playerStats.getUhcClass().equals(UhcClass.SLEEPY)) {
+                                            if (serverPlayers.getGameMode().equals(GameMode.SURVIVAL) || serverPlayers.getGameMode().equals(GameMode.ADVENTURE)) {
+                                                count++;
+                                            }
+                                        }
+                                    }
+                                    break;
+                                case "WITCH":
+                                    for (Player serverPlayers : server.getOnlinePlayers()) {
+                                        PlayerStats playerStats = PlayerData.get(player.getUniqueId());
+                                        if (playerStats.getUhcClass() != null && playerStats.getUhcClass().equals(UhcClass.WITCH)) {
+                                            if (serverPlayers.getGameMode().equals(GameMode.SURVIVAL) || serverPlayers.getGameMode().equals(GameMode.ADVENTURE)) {
+                                                count++;
+                                            }
+                                        }
+                                    }
+                                    break;
+                                case "BLAZE":
+                                    for (Player serverPlayers : server.getOnlinePlayers()) {
+                                        PlayerStats playerStats = PlayerData.get(player.getUniqueId());
+                                        if (playerStats.getUhcClass() != null && playerStats.getUhcClass().equals(UhcClass.BLAZE)) {
+                                            if (serverPlayers.getGameMode().equals(GameMode.SURVIVAL) || serverPlayers.getGameMode().equals(GameMode.ADVENTURE)) {
+                                                count++;
+                                            }
+                                        }
+                                    }
+                                    break;
+                                default:
+                                    ServerMessage.unicastTo(player, ChatColor.RED + "Esa clase no existe, puede que la hayas escrito mal :P (ASSASSIN/ARCHER/WARDEN/IRONGOLEM/BLAZE/DOLPHIN/WITCH/SLEEPY)");
+                                    failed = true;
+                            }
+                            if (!failed && count == 0) {
+                                ServerMessage.unicastTo(player, ChatColor.RED + "Parece que nadie ha elegido la clase " + strings[1]);
+                            } else if (!failed && count > 0) {
+                                ServerMessage.unicastTo(player, "Hay un total de " + ChatColor.GREEN + count + " " + strings[1]);
+                            }
+                        }
+                        break;
                 }
             }
         } else {

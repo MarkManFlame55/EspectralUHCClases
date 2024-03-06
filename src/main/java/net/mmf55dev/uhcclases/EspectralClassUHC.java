@@ -27,6 +27,8 @@ public final class EspectralClassUHC extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new IronGolemAbility(), this);
         getServer().getPluginManager().registerEvents(new WardenAbility(), this);
         getServer().getPluginManager().registerEvents(new HurtSounds(), this);
+        getServer().getPluginManager().registerEvents(new GolemHammerItem(), this);
+        getServer().getPluginManager().registerEvents(new DeathEvent(), this);
 
     }
 

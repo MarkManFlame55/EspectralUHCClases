@@ -2,6 +2,7 @@ net\mmf55dev\uhcclases\abilities\WardenAbility.class
 net\mmf55dev\uhcclases\abilities\BlazeAbility.class
 net\mmf55dev\uhcclases\items\MenuItems.class
 net\mmf55dev\uhcclases\items\SleepyItem.class
+net\mmf55dev\uhcclases\abilities\DeathEvent.class
 net\mmf55dev\uhcclases\abilities\AssassinAbility.class
 net\mmf55dev\uhcclases\classes\ClassManager.class
 net\mmf55dev\uhcclases\utils\Time.class
@@ -17,6 +18,7 @@ net\mmf55dev\uhcclases\abilities\BlazeAbility$1.class
 net\mmf55dev\uhcclases\items\WitchWandItem.class
 net\mmf55dev\uhcclases\items\SonicBoomItem$1.class
 net\mmf55dev\uhcclases\abilities\HurtSounds.class
+net\mmf55dev\uhcclases\items\DolphinItems.class
 net\mmf55dev\uhcclases\items\SonicBoomItem.class
 net\mmf55dev\uhcclases\utils\MobUtils.class
 net\mmf55dev\uhcclases\EspectralClassUHC.class
@@ -29,4 +31,5 @@ net\mmf55dev\uhcclases\classes\UhcClass.class
 net\mmf55dev\uhcclases\player\PlayerData.class
 net\mmf55dev\uhcclases\player\PlayerStats.class
 net\mmf55dev\uhcclases\utils\ServerMessage.class
+net\mmf55dev\uhcclases\items\GolemHammerItem.class
 net\mmf55dev\uhcclases\utils\AbilityUtils.class

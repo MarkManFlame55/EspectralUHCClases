@@ -2,6 +2,7 @@ package net.mmf55dev.uhcclases.abilities;
 
 import net.mmf55dev.uhcclases.EspectralClassUHC;
 import net.mmf55dev.uhcclases.classes.UhcClass;
+import net.mmf55dev.uhcclases.items.GolemHammerItem;
 import net.mmf55dev.uhcclases.player.PlayerData;
 import net.mmf55dev.uhcclases.player.PlayerStats;
 import net.mmf55dev.uhcclases.utils.DelayedTask;
@@ -29,7 +30,7 @@ public class IronGolemAbility implements Listener {
         if (playerStats.getUhcClass() != null) {
             if (itemStack.getType().equals(Material.MILK_BUCKET) && playerStats.getUhcClass().equals(UhcClass.IRON_GOLEM)) {
                 new DelayedTask(() -> {
-                    player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, PotionEffect.INFINITE_DURATION, 1, false, false, false));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, PotionEffect.INFINITE_DURATION, 2, false, false, false));
                     player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, PotionEffect.INFINITE_DURATION, 1, false, false, false));
                 }, 1);
 
@@ -37,8 +38,9 @@ public class IronGolemAbility implements Listener {
         }
     }
     public static void init(Player player) {
-        player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, PotionEffect.INFINITE_DURATION, 1, false, false, false));
+        player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, PotionEffect.INFINITE_DURATION, 2, false, false, false));
         player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, PotionEffect.INFINITE_DURATION, 1, false, false, false));
+        player.getInventory().addItem(GolemHammerItem.item());
         ServerMessage.unicastTo(player, ChatColor.GREEN + "Has recibido tu habilidad");
         player.playSound(player, Sound.BLOCK_NOTE_BLOCK_BIT, 1f, 1.5f);
     }

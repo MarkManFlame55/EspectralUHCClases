@@ -55,6 +55,10 @@ public class ClassManager {
             for (PotionEffect effect : serverPlayers.getActivePotionEffects()) {
                 serverPlayers.removePotionEffect(effect.getType());
             }
+            String suffixName = serverPlayers.getDisplayName();
+            String originalName = suffixName.substring(0, suffixName.length() - 4);
+            serverPlayers.setDisplayName(originalName);
+            serverPlayers.setPlayerListName(originalName);
         }
         ServerMessage.multicastToOp(ChatColor.GREEN + "Clases Reiniciadas");
     }

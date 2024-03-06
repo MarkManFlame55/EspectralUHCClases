@@ -1,5 +1,6 @@
 package net.mmf55dev.uhcclases.items;
 
+import net.mmf55dev.uhcclases.classes.UhcClass;
 import net.mmf55dev.uhcclases.player.PlayerData;
 import net.mmf55dev.uhcclases.player.PlayerStats;
 import net.mmf55dev.uhcclases.utils.DelayedTask;
@@ -30,20 +31,18 @@ public class SleepyItem implements Listener {
             ItemStack itemStack = e.getItem();
             World world = player.getWorld();
             if (itemStack != null && itemStack.equals(giveItem())) {
-                itemStack.setAmount(0);
-                world.playSound(player.getLocation(), Sound.ENTITY_TNT_PRIMED, 4.0f, 0.1f);
-                world.spawnParticle(Particle.SMOKE_LARGE, player.getLocation(), 100,1,1,1);
-                player.setFireTicks(Time.secondsToTicks(2));
-                player.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, Time.secondsToTicks(2), 0));
-                player.sendTitle(ChatColor.RED + "o7","VAS A EXPLOTAR!", 0, Time.secondsToTicks(3), 0);
-                new DelayedTask(() -> {
+                if (playerStats.getUhcClass() != null && playerStats.getUhcClass().equals(UhcClass.SLEEPY)) {
+                    itemStack.setAmount(0);
+                    world.spawnParticle(Particle.SMOKE_LARGE, player.getLocation(), 100,1,1,1);
                     world.playSound(player.getLocation(), Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 3.0f, 0.8f);
                     world.playSound(player.getLocation(), Sound.ITEM_TRIDENT_THUNDER, 3.0f, 1.0f);
                     world.createExplosion(player.getLocation(), 12.0f, true, true, player);
                     if (!player.getGameMode().equals(GameMode.CREATIVE)) {
                         player.setHealth(0);
                     }
-                }, Time.secondsToTicks(2));
+                } else {
+                    ServerMessage.unicastTo(player, ChatColor.RED + "No puedes usar este item");
+                }
             }
         }
     }
